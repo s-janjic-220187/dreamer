@@ -1,0 +1,29 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2018",
+    "lib": ["ES2018", "ES2017", "ES2015"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@dreamer/shared": ["../shared/src"]
+    }
+  },
+  "include": [
+    "**/*.ts", 
+    "**/*.tsx", 
+    "**/*.js", 
+    "**/*.jsx",
+    "../shared/src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

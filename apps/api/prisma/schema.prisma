@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Dream {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  date      DateTime
+  tags      String   // JSON array as string
+  mood      String   // enum: positive, negative, neutral, mixed
+  audioPath String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  analyses DreamAnalysis[]
+
+  @@map("dreams")
+}
+
+model DreamAnalysis {
+  id           String   @id @default(uuid())
+  dreamId      String
+  interpretation String
+  symbols      String   // JSON array of symbols as string
+  themes       String   // JSON array as string
+  emotions     String   // JSON array as string
+  confidence   Float    @default(0.0)
+  modelUsed    String
+  generatedAt  DateTime @default(now())
+
+  // Relationships
+  dream Dream @relation(fields: [dreamId], references: [id], onDelete: Cascade)
+
+  @@map("dream_analyses")
+}
+
+model UserPreference {
+  id                    String  @id @default(uuid())
+  userId                String  @unique @default("default") // For future multi-user support
+  preferredAnalysisStyle String @default("detailed") // detailed, brief, symbolic
+  culturalBackground    String?
+  languagePreference    String  @default("en")
+  privacyLevel          String  @default("high") // high, medium, low
+  autoAnalysis          Boolean @default(true)
+  voiceInputEnabled     Boolean @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("user_preferences")
+}
+
+// Full-text search table for dreams (SQLite FTS5)
+// Note: This will be created manually as Prisma doesn't support FTS5 directly
+// CREATE VIRTUAL TABLE dream_search USING fts5(
+//   dream_id,
+//   title,
+//   content,
+//   interpretation,
+//   content='dreams'
+// );

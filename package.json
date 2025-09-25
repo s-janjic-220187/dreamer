@@ -1,0 +1,63 @@
+{
+  "name": "dreamer-app",
+  "version": "0.1.0",
+  "description": "Cross-platform dream analysis application with AI-powered interpretation",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:api\" \"pnpm dev:web\"",
+    "dev:web": "pnpm --filter @dreamer/web dev",
+    "dev:mobile": "pnpm --filter @dreamer/mobile start",
+    "dev:api": "pnpm --filter @dreamer/api dev",
+    "build": "pnpm --filter @dreamer/* build",
+    "build:web": "pnpm --filter @dreamer/web build",
+    "build:mobile": "pnpm --filter @dreamer/mobile build",
+    "build:api": "pnpm --filter @dreamer/api build",
+    "test": "pnpm --filter @dreamer/* test",
+    "test:unit": "pnpm --filter @dreamer/* test:unit",
+    "test:e2e": "pnpm --filter @dreamer/web test:e2e",
+    "lint": "pnpm --filter @dreamer/* lint",
+    "lint:fix": "pnpm --filter @dreamer/* lint:fix",
+    "format": "prettier --write .",
+    "type-check": "pnpm --filter @dreamer/* type-check",
+    "clean": "pnpm --filter @dreamer/* clean && rm -rf node_modules",
+    "db:generate": "pnpm --filter @dreamer/api db:generate",
+    "db:push": "pnpm --filter @dreamer/api db:push",
+    "db:studio": "pnpm --filter @dreamer/api db:studio"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.2"
+  },
+  "keywords": [
+    "dream-analysis",
+    "ai",
+    "react",
+    "react-native",
+    "cross-platform",
+    "typescript",
+    "ollama",
+    "voice-recognition"
+  ],
+  "author": "Dream Analyzer Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/dreamer-app.git"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@dreamer/mobile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "dev": "expo start --dev-client",
+    "build:android": "expo build:android",
+    "build:ios": "expo build:ios",
+    "eject": "expo eject",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@dreamer/shared": "workspace:*",
+    "@react-native-async-storage/async-storage": "^2.1.0",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
+    "crypto-js": "^4.2.0",
+    "expo": "~54.0.10",
+    "expo-av": "^14.0.7",
+    "expo-camera": "^15.0.16",
+    "expo-file-system": "^17.0.1",
+    "expo-media-library": "^15.9.1",
+    "expo-notifications": "^0.28.17",
+    "expo-permissions": "^14.4.0",
+    "expo-secure-store": "^15.0.7",
+    "expo-speech": "^12.0.2",
+    "expo-sqlite": "^14.0.3",
+    "expo-status-bar": "~3.0.8",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-gesture-handler": "^2.20.2",
+    "react-native-safe-area-context": "^4.8.0",
+    "react-native-screens": "^3.34.0",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@expo/metro-config": "~0.20.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/react": "~19.1.0",
+    "typescript": "~5.9.2"
+  },
+  "private": true
+}

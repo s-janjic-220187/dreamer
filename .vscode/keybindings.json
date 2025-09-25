@@ -1,0 +1,32 @@
+[
+  {
+    "key": "ctrl+shift+f5",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🚀 Start All Services"
+  },
+  {
+    "key": "ctrl+shift+f6",
+    "command": "workbench.action.tasks.runTask", 
+    "args": "🛑 Stop All Services"
+  },
+  {
+    "key": "ctrl+shift+f7",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🔄 Restart All Services"
+  },
+  {
+    "key": "ctrl+shift+f8",
+    "command": "workbench.action.tasks.runTask",
+    "args": "📊 Service Status"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🧪 Run All Tests"
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🎭 Run Playwright Tests"
+  }
+]

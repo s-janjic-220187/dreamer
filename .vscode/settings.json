@@ -18,5 +18,50 @@
   "github.copilot.preferences": {
     "includeFileContext": true,
     "includeWorkspaceContext": true
+  },
+  "typescript.preferences.useAliasesForRenames": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/coverage": true,
+    "**/.cache": true,
+    "**/test-results": true,
+    "**/playwright-report": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/coverage": true,
+    "**/.cache": true,
+    "**/test-results": true,
+    "**/playwright-report": true,
+    "**/pnpm-lock.yaml": true
+  },
+  "emmet.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "task.autoDetect": "on",
+  "task.showDecorations": true,
+  "npm.packageManager": "pnpm",
+  "playwright.reuseBrowser": false,
+  "playwright.showTrace": false,
+  "rest-client.environmentVariables": {
+    "local": {
+      "apiUrl": "http://localhost:3001",
+      "webUrl": "http://localhost:5173"
+    }
   }
 }

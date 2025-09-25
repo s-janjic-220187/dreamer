@@ -30,11 +30,12 @@ ehthumbs.db
 Thumbs.db
 
 # IDE files
-.vscode/launch.json
-.vscode/tasks.json
 .idea/
 *.swp
 *.swo
+
+# VS Code user settings (but keep our automation configs)
+.vscode/settings.json.user
 
 # Runtime data
 pids

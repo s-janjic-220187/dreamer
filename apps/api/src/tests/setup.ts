@@ -1,16 +1,11 @@
-import { beforeAll, afterAll } from 'vitest';
-import { execSync } from 'child_process';
+import { afterAll, beforeAll } from 'vitest';
 
 beforeAll(async () => {
-  // Create test database by copying the main schema
-  try {
-    execSync('npx prisma db push --schema=./prisma/schema.prisma', {
-      env: { ...process.env, DATABASE_URL: 'file:./test.db' },
-      stdio: 'inherit',
-    });
-  } catch (error) {
-    console.log('Test database setup complete or already exists');
-  }
+  // Set test environment
+  process.env['DATABASE_URL'] = 'file:./test.db';
+  process.env['NODE_ENV'] = 'test';
+
+  console.log('Test environment setup complete');
 });
 
 afterAll(async () => {
@@ -19,6 +14,9 @@ afterAll(async () => {
     const fs = await import('fs');
     if (fs.existsSync('./test.db')) {
       fs.unlinkSync('./test.db');
+    }
+    if (fs.existsSync('./prisma/test.db')) {
+      fs.unlinkSync('./prisma/test.db');
     }
   } catch (error) {
     // Ignore cleanup errors

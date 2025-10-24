@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import type { 
-  Dream, 
-  DreamAnalysis, 
-  DreamSearchParams,
+import type {
   CreateDreamInput,
-  UpdateDreamInput 
+  Dream,
+  DreamAnalysis,
+  DreamSearchParams,
+  UpdateDreamInput
 } from '@dreamer/shared';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -93,7 +93,7 @@ export class DreamService {
 
     // Build where clause
     const where: any = {};
-    
+
     if (mood && mood.length > 0) {
       where.mood = { in: mood };
     }
@@ -104,11 +104,11 @@ export class DreamService {
       if (dateTo) where.date.lte = dateTo;
     }
 
-    // Handle text search
+    // Handle text search (SQLite doesn't support mode: 'insensitive')
     if (query) {
       where.OR = [
-        { title: { contains: query, mode: 'insensitive' } },
-        { content: { contains: query, mode: 'insensitive' } },
+        { title: { contains: query } },
+        { content: { contains: query } },
       ];
     }
 

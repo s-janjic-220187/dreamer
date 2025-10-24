@@ -1,6 +1,6 @@
+import type { CreateDreamInput, DreamSearchParams, UpdateDreamInput } from '@dreamer/shared';
 import { FastifyInstance } from 'fastify';
 import { dreamService } from '../services/dream.service';
-import type { CreateDreamInput, UpdateDreamInput, DreamSearchParams } from '@dreamer/shared';
 
 export async function dreamRoutes(fastify: FastifyInstance) {
   // Create a new dream
@@ -23,7 +23,20 @@ export async function dreamRoutes(fastify: FastifyInstance) {
           type: 'object',
           properties: {
             success: { type: 'boolean' },
-            data: { type: 'object' },
+            data: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                title: { type: 'string' },
+                content: { type: 'string' },
+                date: { type: 'string' },
+                tags: { type: 'array', items: { type: 'string' } },
+                mood: { type: 'string' },
+                audioPath: { type: ['string', 'null'] },
+                createdAt: { type: 'string' },
+                updatedAt: { type: 'string' },
+              },
+            },
             timestamp: { type: 'string' },
           },
         },
@@ -123,7 +136,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
       try {
         const { id } = request.params as { id: string };
         const dream = await dreamService.getDreamById(id);
-        
+
         if (!dream) {
           return reply.code(404).send({
             success: false,
@@ -180,7 +193,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
       try {
         const { id } = request.params as { id: string };
         const dream = await dreamService.updateDream(id, request.body as UpdateDreamInput);
-        
+
         if (!dream) {
           return reply.code(404).send({
             success: false,
@@ -226,7 +239,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
       try {
         const { id } = request.params as { id: string };
         const success = await dreamService.deleteDream(id);
-        
+
         if (!success) {
           return reply.code(404).send({
             success: false,
@@ -268,7 +281,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
       try {
         const { id } = request.params as { id: string };
         const analysis = await dreamService.analyzeDream(id);
-        
+
         if (!analysis) {
           return reply.code(404).send({
             success: false,

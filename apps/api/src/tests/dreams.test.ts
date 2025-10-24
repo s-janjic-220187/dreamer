@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
-import { build } from '../app';
-import { FastifyInstance } from 'fastify';
 import { PrismaClient } from '@prisma/client';
+import { FastifyInstance } from 'fastify';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { build } from '../app';
 
 describe('Dreams API Endpoints', () => {
   let app: FastifyInstance;
@@ -40,8 +40,9 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(201);
-      
+
       const body = JSON.parse(response.body);
+
       expect(body.success).toBe(true);
       expect(body.data).toBeDefined();
       expect(body.data.title).toBe(dreamData.title);
@@ -63,7 +64,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(400);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(false);
       expect(body.error.code).toBe('VALIDATION_ERROR');
@@ -82,7 +83,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(201);
-      
+
       const body = JSON.parse(response.body);
       expect(body.data.mood).toBe('neutral');
       expect(body.data.tags).toEqual([]);
@@ -128,7 +129,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.data.dreams).toBeDefined();
@@ -144,7 +145,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.data.dreams).toHaveLength(1);
       expect(body.data.dreams[0].mood).toBe('positive');
@@ -157,12 +158,12 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.data.dreams.length).toBeGreaterThan(0);
       expect(
-        body.data.dreams.some((dream: any) => 
-          dream.title.toLowerCase().includes('flying') || 
+        body.data.dreams.some((dream: any) =>
+          dream.title.toLowerCase().includes('flying') ||
           dream.content.toLowerCase().includes('flying')
         )
       ).toBe(true);
@@ -175,7 +176,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.data.dreams).toHaveLength(2);
       expect(body.data.total).toBe(3);
@@ -206,7 +207,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.data.id).toBe(testDreamId);
@@ -221,7 +222,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(404);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(false);
       expect(body.error.code).toBe('DREAM_NOT_FOUND');
@@ -258,7 +259,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.data.title).toBe(updateData.title);
@@ -346,7 +347,7 @@ describe('Dreams API Endpoints', () => {
       });
 
       expect(response.statusCode).toBe(200);
-      
+
       const body = JSON.parse(response.body);
       expect(body.success).toBe(true);
       expect(body.data.interpretation).toBeDefined();

@@ -48,4 +48,4 @@ if (require.main === module) {
   startServer();
 }
 
-export { server, build };
+export { build, server };

@@ -67,6 +67,20 @@ p {
   margin: 0 0 1rem 0;
 }
 
+/* Form elements theming */
+input[type="checkbox"] {
+  accent-color: hsl(var(--blue8));
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border-color));
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: hsl(var(--blue8));
+}
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {

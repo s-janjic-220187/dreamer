@@ -93,6 +93,9 @@
 .privacy-setting input[type="checkbox"] {
   margin-right: 12px;
   transform: scale(1.2);
+  accent-color: hsl(var(--blue8));
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border-color));
 }
 
 .privacy-setting-label {

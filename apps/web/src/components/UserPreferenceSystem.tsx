@@ -138,7 +138,15 @@ export const UserPreferenceSystem: React.FC = () => {
               <select
                 value={preferences.theme}
                 onChange={(e) => updatePreference('theme', e.target.value as 'light' | 'dark' | 'auto')}
-                style={{ padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px' }}
+                style={{ 
+                  padding: '8px 12px', 
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  borderColor: 'hsl(var(--border-color))',
+                  backgroundColor: 'hsl(var(--background))',
+                  color: 'hsl(var(--color))',
+                  borderRadius: '4px' 
+                }}
               >
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
@@ -154,7 +162,15 @@ export const UserPreferenceSystem: React.FC = () => {
               <select
                 value={preferences.fontSize}
                 onChange={(e) => updatePreference('fontSize', e.target.value as 'small' | 'medium' | 'large')}
-                style={{ padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px' }}
+                style={{ 
+                  padding: '8px 12px', 
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  borderColor: 'hsl(var(--border-color))',
+                  backgroundColor: 'hsl(var(--background))',
+                  color: 'hsl(var(--color))',
+                  borderRadius: '4px' 
+                }}
               >
                 <option value="small">Small</option>
                 <option value="medium">Medium</option>
@@ -276,7 +292,15 @@ export const UserPreferenceSystem: React.FC = () => {
                   <select
                     value={preferences.aiInsightLevel}
                     onChange={(e) => updatePreference('aiInsightLevel', e.target.value as 'basic' | 'detailed' | 'advanced')}
-                    style={{ padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px' }}
+                    style={{ 
+                      padding: '8px 12px', 
+                      borderWidth: '1px',
+                      borderStyle: 'solid',
+                      borderColor: 'hsl(var(--border-color))',
+                      backgroundColor: 'hsl(var(--background))',
+                      color: 'hsl(var(--color))',
+                      borderRadius: '4px' 
+                    }}
                   >
                     <option value="basic">Basic (simple interpretations)</option>
                     <option value="detailed">Detailed (comprehensive analysis)</option>
@@ -335,7 +359,15 @@ export const UserPreferenceSystem: React.FC = () => {
               <select
                 value={preferences.profileVisibility}
                 onChange={(e) => updatePreference('profileVisibility', e.target.value as 'private' | 'friends' | 'public')}
-                style={{ padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px' }}
+                style={{ 
+                  padding: '8px 12px', 
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  borderColor: 'hsl(var(--border-color))',
+                  backgroundColor: 'hsl(var(--background))',
+                  color: 'hsl(var(--color))',
+                  borderRadius: '4px' 
+                }}
               >
                 <option value="private">Private (only you)</option>
                 <option value="friends">Friends only</option>

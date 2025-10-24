@@ -126,7 +126,11 @@ export const DreamSharingFeatures: React.FC = () => {
               style={{
                 width: '100%',
                 padding: '8px 12px',
-                border: '1px solid #ced4da',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: 'hsl(var(--border-color))',
+                backgroundColor: 'hsl(var(--background))',
+                color: 'hsl(var(--color))',
                 borderRadius: '4px',
                 fontSize: '14px'
               }}

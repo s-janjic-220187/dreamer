@@ -49,5 +49,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    strictPort: true, // Exit if port 5173 is already in use instead of trying another port
+    host: true, // Listen on all addresses
   },
 })

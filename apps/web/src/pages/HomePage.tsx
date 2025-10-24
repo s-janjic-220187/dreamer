@@ -22,7 +22,7 @@ export function HomePage() {
       </YStack>
 
       <YStack space="$3" alignItems="center" marginTop="$6">
-        <Link to="/dreams">
+        <Link to="/dreams/new">
           <Button size="$5" theme="blue" data-testid="start-analyzing-button">
             Start Analyzing Dreams
           </Button>

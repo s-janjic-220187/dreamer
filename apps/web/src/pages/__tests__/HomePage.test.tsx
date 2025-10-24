@@ -64,7 +64,7 @@ describe('HomePage', () => {
     const analyzeLink = screen.getByRole('link', { name: /start analyzing dreams/i });
     const journalLink = screen.getByRole('link', { name: /view dream journal/i });
 
-    expect(analyzeLink).toHaveAttribute('href', '/dreams');
+    expect(analyzeLink).toHaveAttribute('href', '/dreams/new');
     expect(journalLink).toHaveAttribute('href', '/dreams');
   });
 

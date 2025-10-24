@@ -282,10 +282,20 @@ export const AdvancedDreamSearch: React.FC = () => {
           style={{
             padding: '12px',
             fontSize: '16px',
-            border: '1px solid #d1d5db',
             borderRadius: '8px',
             outline: 'none',
             width: '100%',
+            backgroundColor: 'hsl(var(--background))',
+            color: 'hsl(var(--color))',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: 'hsl(var(--border-color))',
+          }}
+          onFocus={(e) => {
+            e.target.style.borderColor = 'hsl(var(--blue8))';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = 'hsl(var(--border-color))';
           }}
         />
 

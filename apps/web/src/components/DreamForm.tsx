@@ -134,19 +134,21 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             style={{
               padding: '12px',
               borderRadius: '8px',
-              border: validationErrors.title ? '2px solid #ef4444' : '1px solid #d1d5db',
+              borderWidth: validationErrors.title ? '2px' : '1px',
+              borderStyle: 'solid',
+              borderColor: validationErrors.title ? '#ef4444' : 'hsl(var(--border-color))',
               fontSize: '16px',
-              backgroundColor: 'white',
-              color: 'black',
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--color))',
               width: '100%',
               outline: 'none',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = validationErrors.title ? '#ef4444' : '#3b82f6';
-              e.target.style.boxShadow = validationErrors.title ? '0 0 0 1px #ef4444' : '0 0 0 1px #3b82f6';
+              e.target.style.borderColor = validationErrors.title ? '#ef4444' : 'hsl(var(--blue8))';
+              e.target.style.boxShadow = validationErrors.title ? '0 0 0 1px #ef4444' : '0 0 0 1px hsl(var(--blue8))';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = validationErrors.title ? '#ef4444' : '#d1d5db';
+              e.target.style.borderColor = validationErrors.title ? '#ef4444' : 'hsl(var(--border-color))';
               e.target.style.boxShadow = 'none';
             }}
           />
@@ -170,12 +172,15 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             style={{
               padding: '8px 12px',
               borderRadius: '8px',
-              border: '1px solid #d1d5db',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'hsl(var(--border-color))',
               fontSize: '16px',
               width: '100%',
               outline: 'none',
-              backgroundColor: 'transparent',
-              colorScheme: 'light',
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--color))',
+              colorScheme: 'dark light',
               cursor: 'pointer',
             }}
             onFocus={(e) => {
@@ -201,19 +206,21 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             style={{
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #d1d5db',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'hsl(var(--border-color))',
               fontSize: '16px',
-              backgroundColor: 'white',
-              color: 'black',
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--color))',
               width: '100%',
               outline: 'none',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#3b82f6';
-              e.target.style.boxShadow = '0 0 0 1px #3b82f6';
+              e.target.style.borderColor = 'hsl(var(--blue8))';
+              e.target.style.boxShadow = '0 0 0 1px hsl(var(--blue8))';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#d1d5db';
+              e.target.style.borderColor = 'hsl(var(--border-color))';
               e.target.style.boxShadow = 'none';
             }}
           >
@@ -238,21 +245,23 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             style={{
               padding: '12px',
               borderRadius: '8px',
-              border: validationErrors.content ? '2px solid #ef4444' : '1px solid #d1d5db',
+              borderWidth: validationErrors.content ? '2px' : '1px',
+              borderStyle: 'solid',
+              borderColor: validationErrors.content ? '#ef4444' : 'hsl(var(--border-color))',
               fontSize: '16px',
-              backgroundColor: 'white',
-              color: 'black',
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--color))',
               width: '100%',
               outline: 'none',
               resize: 'vertical',
               fontFamily: 'inherit',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = validationErrors.content ? '#ef4444' : '#3b82f6';
-              e.target.style.boxShadow = validationErrors.content ? '0 0 0 1px #ef4444' : '0 0 0 1px #3b82f6';
+              e.target.style.borderColor = validationErrors.content ? '#ef4444' : 'hsl(var(--blue8))';
+              e.target.style.boxShadow = validationErrors.content ? '0 0 0 1px #ef4444' : '0 0 0 1px hsl(var(--blue8))';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = validationErrors.content ? '#ef4444' : '#d1d5db';
+              e.target.style.borderColor = validationErrors.content ? '#ef4444' : 'hsl(var(--border-color))';
               e.target.style.boxShadow = 'none';
             }}
           />
@@ -280,19 +289,21 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             style={{
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #d1d5db',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'hsl(var(--border-color))',
               fontSize: '16px',
-              backgroundColor: 'white',
-              color: 'black',
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--color))',
               width: '100%',
               outline: 'none',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#3b82f6';
-              e.target.style.boxShadow = '0 0 0 1px #3b82f6';
+              e.target.style.borderColor = 'hsl(var(--blue8))';
+              e.target.style.boxShadow = '0 0 0 1px hsl(var(--blue8))';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#d1d5db';
+              e.target.style.borderColor = 'hsl(var(--border-color))';
               e.target.style.boxShadow = 'none';
             }}
           />

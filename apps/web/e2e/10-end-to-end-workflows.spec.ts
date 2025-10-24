@@ -4,14 +4,14 @@ test.describe('End-to-End User Workflows', () => {
   test('should complete full dream journal workflow', async ({ page }) => {
     // 1. Start from homepage
     await page.goto('/')
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     
     // 2. Navigate to dreams
     await page.getByRole('link', { name: /start analyzing dreams/i }).click()
     await expect(page).toHaveURL('/dreams')
     
     // 3. Create a new dream
-    await page.getByText('Add New Dream').click()
+    await page.getByTestId('add-new-dream-button').click()
     await expect(page).toHaveURL('/dreams/new')
     
     const dreamTitle = `E2E Test Dream ${Date.now()}`
@@ -30,7 +30,7 @@ test.describe('End-to-End User Workflows', () => {
     
     // 6. View the dream details
     await page.getByText(dreamTitle).click()
-    await expect(page.getByText('This is an end-to-end test dream')).toBeVisible()
+    await expect(page.getByText('This is an end-to-end test dream').first()).toBeVisible()
     
     // 7. Try AI analysis if available
     const analyzeButton = page.getByText('Analyze Dream')
@@ -82,19 +82,19 @@ test.describe('End-to-End User Workflows', () => {
       // Verify tab content loads
       switch (tab) {
         case 'Dreams':
-          await expect(page.getByText('Add New Dream')).toBeVisible()
+          await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
           break
         case 'Analytics':
-          await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+          await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
           break
         case 'Search':
-          await expect(page.getByText('Advanced Dream Search')).toBeVisible()
+          await expect(page.getByTestId('search-heading')).toBeVisible()
           break
         case 'Sharing':
-          await expect(page.getByText('Dream Sharing Features')).toBeVisible()
+          await expect(page.getByTestId('sharing-features-heading')).toBeVisible()
           break
         case 'Preferences':
-          await expect(page.getByText('User Preference System')).toBeVisible()
+          await expect(page.getByTestId('preferences-system-heading')).toBeVisible()
           break
         case 'Privacy':
           await expect(page.getByText('Privacy Controls')).toBeVisible()
@@ -103,8 +103,8 @@ test.describe('End-to-End User Workflows', () => {
     }
     
     // 4. Test search functionality
-    await page.getByText('Search').click()
-    const searchInput = page.getByPlaceholder('Search dreams...')
+    await page.getByTestId('tab-search').click()
+    const searchInput = page.getByRole('textbox', { name: /search/i })
     if (await searchInput.isVisible()) {
       await searchInput.fill('test')
       await searchInput.press('Enter')
@@ -112,11 +112,11 @@ test.describe('End-to-End User Workflows', () => {
     }
     
     // 5. Test analytics
-    await page.getByText('Analytics').click()
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await page.getByTestId('tab-analytics').click()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
     
     // 6. Test privacy controls
-    await page.getByText('Privacy').click()
+    await page.getByTestId('tab-privacy').click()
     await expect(page.getByText('Privacy Controls')).toBeVisible()
   })
 
@@ -147,7 +147,7 @@ test.describe('End-to-End User Workflows', () => {
     
     // Create each dream
     for (const dream of dreamData) {
-      await page.getByText('Add New Dream').click()
+      await page.getByTestId('add-new-dream-button').click()
       await page.getByLabel('Title').fill(dream.title)
       await page.getByLabel('Content').fill(dream.content)
       await page.getByLabel('Mood').selectOption(dream.mood)
@@ -164,12 +164,12 @@ test.describe('End-to-End User Workflows', () => {
     }
     
     // Test analytics with multiple dreams
-    await page.getByText('Analytics').click()
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await page.getByTestId('tab-analytics').click()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
     
     // Test search with multiple dreams
-    await page.getByText('Search').click()
-    const searchInput = page.getByPlaceholder('Search dreams...')
+    await page.getByTestId('tab-search').click()
+    const searchInput = page.getByRole('textbox', { name: /search/i })
     if (await searchInput.isVisible()) {
       await searchInput.fill('flying')
       await page.waitForTimeout(500)
@@ -216,16 +216,16 @@ test.describe('Integration Testing', () => {
     
     // Simulate rapid interactions
     const promises = [
-      page.getByText('Analytics').click(),
-      page.getByText('Search').click(),
-      page.getByText('Dreams').click()
+      page.getByTestId('tab-analytics').click(),
+      page.getByTestId('tab-search').click(),
+      page.getByTestId('tab-dreams').click()
     ]
     
     // Execute actions concurrently
     await Promise.all(promises.map(p => p.catch(() => {})))
     
     // App should remain stable
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 
   test('should validate data consistency', async ({ page }) => {

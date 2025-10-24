@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { YStack, XStack } from '@tamagui/stacks'
-import { H1, H2, Paragraph } from '@tamagui/text'
 import { Button } from '@tamagui/button'
+import { XStack, YStack } from '@tamagui/stacks'
+import { H1, H2, Paragraph } from '@tamagui/text'
+import { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAIAnalysis, useAIStore } from '../stores/aiStore'
 import { useDreamStore } from '../stores/dreamStore'
-import { useAIStore, useAIAnalysis } from '../stores/aiStore'
 
 export function DreamDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -19,7 +19,7 @@ export function DreamDetailPage() {
       navigate('/dreams/new', { replace: true })
       return
     }
-    
+
     if (id) {
       fetchDreamById(id)
     }
@@ -66,23 +66,40 @@ export function DreamDetailPage() {
     <YStack space="$4" padding="$4">
       {/* Header */}
       <XStack justifyContent="space-between" alignItems="center">
-        <Button variant="outlined" onPress={() => navigate('/dreams')}>
+        <Button
+          variant="outlined"
+          onPress={() => navigate('/dreams')}
+          data-testid="back-to-dreams-button"
+        >
           ← Back to Dreams
         </Button>
         <XStack space="$2">
-          <Button variant="outlined" onPress={handleEdit}>Edit</Button>
-          <Button theme="red" variant="outlined" onPress={handleDelete}>Delete</Button>
+          <Button
+            variant="outlined"
+            onPress={handleEdit}
+            data-testid="edit-dream-button"
+          >
+            Edit
+          </Button>
+          <Button
+            theme="red"
+            variant="outlined"
+            onPress={handleDelete}
+            data-testid="delete-dream-button"
+          >
+            Delete
+          </Button>
         </XStack>
       </XStack>
 
       {/* Dream Content */}
       <YStack space="$4" padding="$4" backgroundColor="$gray1" borderRadius="$4">
         <XStack justifyContent="space-between" alignItems="center">
-          <H1 fontSize="$8">{currentDream.title}</H1>
-          <Paragraph color="$gray10">
+          <H1 fontSize="$8" data-testid="dream-title">{currentDream.title}</H1>
+          <Paragraph color="$gray10" data-testid="dream-date">
             {new Date(currentDream.date).toLocaleDateString('en-US', {
               weekday: 'long',
-              year: 'numeric', 
+              year: 'numeric',
               month: 'long',
               day: 'numeric'
             })}
@@ -91,7 +108,7 @@ export function DreamDetailPage() {
 
         <YStack space="$3">
           <H2 fontSize="$6">Dream Content</H2>
-          <Paragraph fontSize="$5" lineHeight="$6">
+          <Paragraph fontSize="$5" lineHeight="$6" data-testid="dream-content">
             {currentDream.content}
           </Paragraph>
         </YStack>
@@ -99,11 +116,12 @@ export function DreamDetailPage() {
         <XStack space="$4" alignItems="center">
           <YStack>
             <Paragraph fontSize="$4" fontWeight="600">Mood</Paragraph>
-            <YStack 
-              paddingHorizontal="$3" 
-              paddingVertical="$2" 
-              backgroundColor="$blue4" 
+            <YStack
+              paddingHorizontal="$3"
+              paddingVertical="$2"
+              backgroundColor="$blue4"
               borderRadius="$3"
+              data-testid="dream-mood"
             >
               <Paragraph color="$blue11" textTransform="capitalize">
                 {currentDream.mood}
@@ -114,14 +132,15 @@ export function DreamDetailPage() {
           {currentDream.tags && currentDream.tags.length > 0 && (
             <YStack flex={1}>
               <Paragraph fontSize="$4" fontWeight="600" marginBottom="$2">Tags</Paragraph>
-              <XStack space="$2" flexWrap="wrap">
+              <XStack space="$2" flexWrap="wrap" data-testid="dream-tags">
                 {currentDream.tags.map((tag: string) => (
-                  <YStack 
+                  <YStack
                     key={tag}
-                    paddingHorizontal="$3" 
-                    paddingVertical="$1" 
-                    backgroundColor="$gray4" 
+                    paddingHorizontal="$3"
+                    paddingVertical="$1"
+                    backgroundColor="$gray4"
                     borderRadius="$2"
+                    data-testid={`dream-tag-${tag}`}
                   >
                     <Paragraph fontSize="$3" color="$gray11">
                       {tag}
@@ -148,32 +167,33 @@ export function DreamDetailPage() {
       {/* Analysis Section */}
       <YStack space="$4" padding="$4" backgroundColor="$gray1" borderRadius="$4">
         <XStack justifyContent="space-between" alignItems="center">
-          <H2 fontSize="$7">Dream Analysis</H2>
-          <Button 
-            theme="blue" 
+          <H2 fontSize="$7" data-testid="dream-analysis-heading">Dream Analysis</H2>
+          <Button
+            theme="blue"
             onPress={handleAnalyze}
             disabled={isAnalyzing}
+            data-testid="analyze-dream-button"
           >
             {isAnalyzing ? 'Analyzing...' : 'Analyze Dream'}
           </Button>
         </XStack>
-        
+
         {analysis ? (
-          <YStack space="$3">
+          <YStack space="$3" data-testid="dream-analysis-content">
             <Paragraph fontSize="$5" lineHeight="$6">
               {analysis.interpretation}
             </Paragraph>
-            
+
             {analysis.themes && analysis.themes.length > 0 && (
               <YStack>
                 <Paragraph fontSize="$4" fontWeight="600" marginBottom="$2">Themes</Paragraph>
-                <XStack space="$2" flexWrap="wrap">
+                <XStack space="$2" flexWrap="wrap" data-testid="analysis-themes">
                   {analysis.themes.map((theme: string, index: number) => (
-                    <YStack 
+                    <YStack
                       key={index}
-                      paddingHorizontal="$3" 
-                      paddingVertical="$1" 
-                      backgroundColor="$purple4" 
+                      paddingHorizontal="$3"
+                      paddingVertical="$1"
+                      backgroundColor="$purple4"
                       borderRadius="$2"
                     >
                       <Paragraph fontSize="$3" color="$purple11">
@@ -188,13 +208,13 @@ export function DreamDetailPage() {
             {analysis.emotions && analysis.emotions.length > 0 && (
               <YStack>
                 <Paragraph fontSize="$4" fontWeight="600" marginBottom="$2">Emotions</Paragraph>
-                <XStack space="$2" flexWrap="wrap">
+                <XStack space="$2" flexWrap="wrap" data-testid="analysis-emotions">
                   {analysis.emotions.map((emotionData: { emotion: string; intensity: number }, index: number) => (
-                    <YStack 
+                    <YStack
                       key={index}
-                      paddingHorizontal="$3" 
-                      paddingVertical="$1" 
-                      backgroundColor="$orange4" 
+                      paddingHorizontal="$3"
+                      paddingVertical="$1"
+                      backgroundColor="$orange4"
                       borderRadius="$2"
                     >
                       <Paragraph fontSize="$3" color="$orange11">
@@ -207,7 +227,12 @@ export function DreamDetailPage() {
             )}
           </YStack>
         ) : (
-          <Paragraph color="$gray10" textAlign="center" paddingVertical="$8">
+          <Paragraph
+            color="$gray10"
+            textAlign="center"
+            paddingVertical="$8"
+            data-testid="no-analysis-message"
+          >
             No analysis available yet. Click "Analyze Dream" to get AI-powered insights about this dream.
           </Paragraph>
         )}

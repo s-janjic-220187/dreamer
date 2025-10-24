@@ -5,14 +5,14 @@ test.describe('Advanced Search Features', () => {
     await page.goto('/dreams')
     
     // Navigate to Search tab
-    await page.getByText('Search').click()
+    await page.getByTestId('tab-search').click()
   })
 
   test('should display advanced search interface', async ({ page }) => {
-    await expect(page.getByText('Advanced Dream Search')).toBeVisible()
+    await expect(page.getByTestId('search-heading')).toBeVisible()
     
     // Check for search components
-    await expect(page.getByPlaceholder('Search dreams...')).toBeVisible()
+    await expect(page.getByRole('textbox', { name: /search/i })).toBeVisible()
     
     // Look for filter options
     const searchFilters = [
@@ -31,7 +31,7 @@ test.describe('Advanced Search Features', () => {
   })
 
   test('should perform text search', async ({ page }) => {
-    const searchInput = page.getByPlaceholder('Search dreams...')
+    const searchInput = page.getByRole('textbox', { name: /search/i })
     await searchInput.fill('flying')
     
     // Trigger search (look for search button or enter key)
@@ -68,7 +68,7 @@ test.describe('Advanced Search Features', () => {
 
   test('should clear search filters', async ({ page }) => {
     // Apply some filters first
-    const searchInput = page.getByPlaceholder('Search dreams...')
+    const searchInput = page.getByRole('textbox', { name: /search/i })
     await searchInput.fill('test')
     
     // Look for clear button
@@ -84,8 +84,8 @@ test.describe('Advanced Search Features', () => {
   test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     
-    await expect(page.getByText('Advanced Dream Search')).toBeVisible()
-    await expect(page.getByPlaceholder('Search dreams...')).toBeVisible()
+    await expect(page.getByTestId('search-heading')).toBeVisible()
+    await expect(page.getByRole('textbox', { name: /search/i })).toBeVisible()
   })
 })
 
@@ -94,11 +94,11 @@ test.describe('Dream Analytics Features', () => {
     await page.goto('/dreams')
     
     // Navigate to Analytics tab
-    await page.getByText('Analytics').click()
+    await page.getByTestId('tab-analytics').click()
   })
 
   test('should display analytics dashboard', async ({ page }) => {
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
   })
 
   test('should show visualization charts', async ({ page }) => {
@@ -174,6 +174,6 @@ test.describe('Dream Analytics Features', () => {
   test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
   })
 })

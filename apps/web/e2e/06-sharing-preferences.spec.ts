@@ -5,11 +5,11 @@ test.describe('Dream Sharing Features', () => {
     await page.goto('/dreams')
     
     // Navigate to Sharing tab
-    await page.getByText('Sharing').click()
+    await page.getByTestId('tab-sharing').click()
   })
 
   test('should display sharing interface', async ({ page }) => {
-    await expect(page.getByText('Dream Sharing Features')).toBeVisible()
+    await expect(page.getByTestId('sharing-features-heading')).toBeVisible()
   })
 
   test('should show sharing options', async ({ page }) => {
@@ -58,7 +58,7 @@ test.describe('Dream Sharing Features', () => {
   test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     
-    await expect(page.getByText('Dream Sharing Features')).toBeVisible()
+    await expect(page.getByTestId('sharing-features-heading')).toBeVisible()
   })
 })
 
@@ -67,11 +67,11 @@ test.describe('User Preferences Features', () => {
     await page.goto('/dreams')
     
     // Navigate to Preferences tab
-    await page.getByText('Preferences').click()
+    await page.getByTestId('tab-preferences').click()
   })
 
   test('should display preferences interface', async ({ page }) => {
-    await expect(page.getByText('User Preference System')).toBeVisible()
+    await expect(page.getByTestId('preferences-system-heading')).toBeVisible()
   })
 
   test('should show preference options', async ({ page }) => {
@@ -139,6 +139,6 @@ test.describe('User Preferences Features', () => {
   test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     
-    await expect(page.getByText('User Preference System')).toBeVisible()
+    await expect(page.getByTestId('preferences-system-heading')).toBeVisible()
   })
 })

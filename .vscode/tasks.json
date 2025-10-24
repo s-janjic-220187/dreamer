@@ -5,7 +5,9 @@
       "label": "🚀 Start All Services",
       "type": "shell",
       "command": "pnpm",
-      "args": ["dev"],
+      "args": [
+        "dev"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -40,9 +42,11 @@
     },
     {
       "label": "🌐 Start Web Only",
-      "type": "shell", 
+      "type": "shell",
       "command": "pnpm",
-      "args": ["dev:web"],
+      "args": [
+        "dev:web"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -71,8 +75,10 @@
     {
       "label": "⚡ Start API Only",
       "type": "shell",
-      "command": "pnpm", 
-      "args": ["dev:api"],
+      "command": "pnpm",
+      "args": [
+        "dev:api"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -102,7 +108,9 @@
       "label": "📱 Start Mobile Only",
       "type": "shell",
       "command": "pnpm",
-      "args": ["dev:mobile"], 
+      "args": [
+        "dev:mobile"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -118,7 +126,9 @@
       "label": "🛑 Stop All Services",
       "type": "shell",
       "command": ".\\manage.ps1",
-      "args": ["stop"],
+      "args": [
+        "stop"
+      ],
       "group": "build",
       "presentation": {
         "echo": false,
@@ -133,7 +143,9 @@
       "label": "🔄 Restart All Services",
       "type": "shell",
       "command": ".\\manage.ps1",
-      "args": ["restart"],
+      "args": [
+        "restart"
+      ],
       "group": "build",
       "presentation": {
         "echo": false,
@@ -147,7 +159,9 @@
       "label": "📊 Service Status",
       "type": "shell",
       "command": ".\\manage.ps1",
-      "args": ["status"],
+      "args": [
+        "status"
+      ],
       "group": "test",
       "presentation": {
         "echo": false,
@@ -162,7 +176,9 @@
       "label": "🧪 Run All Tests",
       "type": "shell",
       "command": "pnpm",
-      "args": ["test"],
+      "args": [
+        "test"
+      ],
       "group": "test",
       "presentation": {
         "echo": true,
@@ -176,7 +192,9 @@
       "label": "🎭 Run Playwright Tests",
       "type": "shell",
       "command": "pnpm",
-      "args": ["test:e2e"],
+      "args": [
+        "test:e2e"
+      ],
       "group": "test",
       "presentation": {
         "echo": true,
@@ -191,7 +209,9 @@
       "label": "🗄️ Database: Generate Prisma Client",
       "type": "shell",
       "command": "pnpm",
-      "args": ["db:generate"],
+      "args": [
+        "db:generate"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -204,8 +224,10 @@
       "label": "📤 Database: Push Schema",
       "type": "shell",
       "command": "pnpm",
-      "args": ["db:push"],
-      "group": "build", 
+      "args": [
+        "db:push"
+      ],
+      "group": "build",
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -217,7 +239,9 @@
       "label": "🎨 Database: Open Studio",
       "type": "shell",
       "command": "pnpm",
-      "args": ["db:studio"],
+      "args": [
+        "db:studio"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -231,7 +255,9 @@
       "label": "🏗️ Build All",
       "type": "shell",
       "command": "pnpm",
-      "args": ["build"],
+      "args": [
+        "build"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -239,7 +265,9 @@
         "focus": false,
         "panel": "shared"
       },
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": [
+        "$tsc"
+      ]
     },
     {
       "label": "🧹 Clean & Install",
@@ -261,7 +289,9 @@
       "label": "🔍 Lint All",
       "type": "shell",
       "command": "pnpm",
-      "args": ["lint"],
+      "args": [
+        "lint"
+      ],
       "group": "test",
       "presentation": {
         "echo": true,
@@ -269,17 +299,21 @@
         "focus": false,
         "panel": "shared"
       },
-      "problemMatcher": ["$eslint-stylish"]
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
     },
     {
       "label": "🔧 Fix Lint Issues",
       "type": "shell",
       "command": "pnpm",
-      "args": ["lint:fix"],
+      "args": [
+        "lint:fix"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
-        "reveal": "always", 
+        "reveal": "always",
         "focus": false,
         "panel": "shared"
       }

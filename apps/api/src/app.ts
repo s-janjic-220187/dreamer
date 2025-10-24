@@ -1,11 +1,12 @@
-import fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
+import fastify, { FastifyInstance } from 'fastify';
+import { aiRoutes } from './routes/ai';
 import { dreamRoutes } from './routes/dreams';
 
 export function build(opts: { logger?: boolean | object } = {}): FastifyInstance {
-  const app = fastify({ 
+  const app = fastify({
     logger: opts.logger ?? false,
   });
 
@@ -34,8 +35,8 @@ export function build(opts: { logger?: boolean | object } = {}): FastifyInstance
 
   // Health check endpoint
   app.get('/health', async (request, reply) => {
-    return { 
-      status: 'ok', 
+    return {
+      status: 'ok',
       timestamp: new Date().toISOString(),
       version: '0.1.0',
     };
@@ -43,11 +44,12 @@ export function build(opts: { logger?: boolean | object } = {}): FastifyInstance
 
   // Register routes
   app.register(dreamRoutes, { prefix: '/api/v1' });
+  app.register(aiRoutes, { prefix: '/api/v1' });
 
   // Error handler
   app.setErrorHandler((error, request, reply) => {
     const { validation, validationContext } = error as any;
-    
+
     if (validation) {
       reply.status(400).send({
         success: false,

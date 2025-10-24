@@ -43,13 +43,13 @@ export const DreamVisualizationCharts: React.FC = () => {
       if (!acc[date]) {
         acc[date] = { dreams: [], totalMood: 0, categories: {} };
       }
-      
+
       acc[date].dreams.push(dream);
       acc[date].totalMood += dream.mood || 5;
-      
+
       const category = categorizeDream(dream);
       acc[date].categories[category] = (acc[date].categories[category] || 0) + 1;
-      
+
       return acc;
     }, {} as Record<string, any>);
 
@@ -69,7 +69,7 @@ export const DreamVisualizationCharts: React.FC = () => {
     if (totalDreams === 0) return [];
 
     const categoryCount: Record<string, number> = {};
-    
+
     dreams.forEach(dream => {
       const category = categorizeDream(dream);
       categoryCount[category] = (categoryCount[category] || 0) + 1;
@@ -87,7 +87,7 @@ export const DreamVisualizationCharts: React.FC = () => {
 
   const moodTrends = useMemo(() => {
     if (dreams.length === 0) return [];
-    
+
     return dreams
       .filter(dream => {
         const dreamDate = new Date(dream.createdAt);
@@ -104,7 +104,7 @@ export const DreamVisualizationCharts: React.FC = () => {
   }, [dreams]);
 
   const maxCount = Math.max(...chartData.map(d => d.count), 1);
-  
+
   // Calculate average mood safely
   const totalMoodSum = dreams.reduce((sum: number, dream) => {
     let moodValue = 5; // default
@@ -119,13 +119,13 @@ export const DreamVisualizationCharts: React.FC = () => {
 
   if (dreams.length === 0) {
     return (
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: '#f8f9fa', 
-        borderRadius: '8px', 
-        textAlign: 'center' 
+      <div style={{
+        padding: '24px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '8px',
+        textAlign: 'center'
       }}>
-        <h3 style={{ marginBottom: '16px' }}>Dream Visualization</h3>
+        <h3 style={{ marginBottom: '16px' }} data-testid="analytics-dashboard-heading">Dream Analytics Dashboard</h3>
         <p style={{ color: '#6c757d' }}>Start recording dreams to see your patterns and insights</p>
       </div>
     );
@@ -133,25 +133,26 @@ export const DreamVisualizationCharts: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <h3 style={{ marginBottom: '16px' }} data-testid="analytics-dashboard-heading">Dream Analytics Dashboard</h3>
       {/* Dream Activity Chart */}
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: '#ffffff', 
-        borderRadius: '8px', 
-        border: '1px solid #e9ecef' 
+      <div style={{
+        padding: '24px',
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>Dream Activity (Last 30 Days)</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {chartData.map((data) => (
-            <div key={data.date} style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '12px' 
+            <div key={data.date} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
             }}>
-              <span style={{ 
-                fontSize: '14px', 
-                minWidth: '80px', 
-                color: '#6c757d' 
+              <span style={{
+                fontSize: '14px',
+                minWidth: '80px',
+                color: '#6c757d'
               }}>
                 {data.date}
               </span>
@@ -184,19 +185,19 @@ export const DreamVisualizationCharts: React.FC = () => {
       </div>
 
       {/* Category Distribution */}
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: '#ffffff', 
-        borderRadius: '8px', 
-        border: '1px solid #e9ecef' 
+      <div style={{
+        padding: '24px',
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>Dream Categories</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {categoryStats.map((stat) => (
-            <div key={stat.category} style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '12px' 
+            <div key={stat.category} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
             }}>
               <div style={{
                 width: '16px',
@@ -225,19 +226,19 @@ export const DreamVisualizationCharts: React.FC = () => {
       </div>
 
       {/* Mood Trends */}
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: '#ffffff', 
-        borderRadius: '8px', 
-        border: '1px solid #e9ecef' 
+      <div style={{
+        padding: '24px',
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>Recent Mood Trends</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {moodTrends.length > 0 ? moodTrends.map((trend, index) => (
-            <div key={index} style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '12px' 
+            <div key={index} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
             }}>
               <span style={{ fontSize: '14px', minWidth: '80px', color: '#6c757d' }}>
                 {trend.date}
@@ -266,11 +267,11 @@ export const DreamVisualizationCharts: React.FC = () => {
       </div>
 
       {/* Summary Stats */}
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: '#ffffff', 
-        borderRadius: '8px', 
-        border: '1px solid #e9ecef' 
+      <div style={{
+        padding: '24px',
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>AI Pattern Summary</h3>
         <div style={{ display: 'flex', gap: '24px' }}>

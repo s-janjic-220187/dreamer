@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface UserPreferences {
   // Display Preferences
   theme: 'light' | 'dark' | 'auto';
   fontSize: 'small' | 'medium' | 'large';
   compactMode: boolean;
-  
+
   // Dream Recording Preferences
   defaultMoodScale: number;
   autoSave: boolean;
   reminderEnabled: boolean;
   reminderTime: string;
   weekendReminders: boolean;
-  
+
   // AI & Analysis Preferences
   enableAIAnalysis: boolean;
   aiInsightLevel: 'basic' | 'detailed' | 'advanced';
   patternDetection: boolean;
   emotionalAnalysis: boolean;
   symbolInterpretation: boolean;
-  
+
   // Privacy & Sharing
   profileVisibility: 'private' | 'friends' | 'public';
   shareAnalytics: boolean;
   dataExport: boolean;
-  
+
   // Notifications
   newInsightNotifications: boolean;
   communityUpdates: boolean;
   weeklyReports: boolean;
   emailNotifications: boolean;
-  
+
   // Advanced Features
   experimentalFeatures: boolean;
   betaAccess: boolean;
@@ -129,7 +129,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>Display Preferences</h4>
-            
+
             {/* Theme */}
             <div>
               <label style={{ fontWeight: '500', marginBottom: '8px', display: 'block' }}>
@@ -180,7 +180,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>Dream Recording Preferences</h4>
-            
+
             {/* Default Mood Scale */}
             <div>
               <label style={{ fontWeight: '500', marginBottom: '8px', display: 'block' }}>
@@ -218,7 +218,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>Enable daily dream recording reminders</span>
               </label>
-              
+
               {preferences.reminderEnabled && (
                 <div style={{ marginLeft: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div>
@@ -232,7 +232,7 @@ export const UserPreferenceSystem: React.FC = () => {
                       style={{ padding: '8px 12px', border: '1px solid #ced4da', borderRadius: '4px' }}
                     />
                   </div>
-                  
+
                   <div>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
@@ -253,7 +253,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>AI & Analysis Preferences</h4>
-            
+
             {/* Enable AI Analysis */}
             <div>
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
@@ -287,7 +287,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 {/* Analysis Features */}
                 <div>
                   <p style={{ fontWeight: '500', marginBottom: '12px' }}>Analysis Features:</p>
-                  
+
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: '16px' }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
@@ -297,7 +297,7 @@ export const UserPreferenceSystem: React.FC = () => {
                       />
                       <span>Pattern Detection (recurring themes and symbols)</span>
                     </label>
-                    
+
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
                         type="checkbox"
@@ -306,7 +306,7 @@ export const UserPreferenceSystem: React.FC = () => {
                       />
                       <span>Emotional Analysis (mood and feeling patterns)</span>
                     </label>
-                    
+
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
                         type="checkbox"
@@ -326,7 +326,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>Privacy & Sharing Preferences</h4>
-            
+
             {/* Profile Visibility */}
             <div>
               <label style={{ fontWeight: '500', marginBottom: '8px', display: 'block' }}>
@@ -373,7 +373,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>Notification Preferences</h4>
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
@@ -383,7 +383,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>New AI insights available</span>
               </label>
-              
+
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
                   type="checkbox"
@@ -392,7 +392,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>Community updates and featured dreams</span>
               </label>
-              
+
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
                   type="checkbox"
@@ -401,7 +401,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>Weekly dream pattern reports</span>
               </label>
-              
+
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
                   type="checkbox"
@@ -418,7 +418,7 @@ export const UserPreferenceSystem: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h4>Advanced Settings</h4>
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
@@ -428,7 +428,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>Enable experimental features (may be unstable)</span>
               </label>
-              
+
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
                   type="checkbox"
@@ -437,7 +437,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 />
                 <span>Beta access (try new features before release)</span>
               </label>
-              
+
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
                   type="checkbox"
@@ -449,7 +449,7 @@ export const UserPreferenceSystem: React.FC = () => {
             </div>
 
             {/* Export/Import Section */}
-            <div style={{ 
+            <div style={{
               marginTop: '24px',
               padding: '16px',
               backgroundColor: '#f8f9fa',
@@ -472,7 +472,7 @@ export const UserPreferenceSystem: React.FC = () => {
                 >
                   Export Preferences
                 </button>
-                
+
                 <button
                   onClick={resetToDefaults}
                   style={{
@@ -498,84 +498,87 @@ export const UserPreferenceSystem: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '24px', minHeight: '600px' }}>
-      {/* Sidebar */}
-      <div style={{
-        width: '200px',
-        padding: '16px',
-        backgroundColor: '#f8f9fa',
-        borderRadius: '8px',
-        border: '1px solid #e9ecef'
-      }}>
-        <h4 style={{ marginBottom: '16px' }}>Settings</h4>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          {sections.map(section => (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              style={{
-                padding: '12px',
-                textAlign: 'left',
-                backgroundColor: activeSection === section.id ? '#2196F3' : 'transparent',
-                color: activeSection === section.id ? '#ffffff' : '#495057',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <span>{section.icon}</span>
-              <span style={{ fontSize: '14px' }}>{section.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div style={{ flex: 1 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <h2 data-testid="preferences-system-heading">User Preference System</h2>
+      <div style={{ display: 'flex', gap: '24px', minHeight: '600px' }}>
+        {/* Sidebar */}
         <div style={{
-          padding: '24px',
-          backgroundColor: '#ffffff',
+          width: '200px',
+          padding: '16px',
+          backgroundColor: '#f8f9fa',
           borderRadius: '8px',
-          border: '1px solid #e9ecef',
-          minHeight: '500px'
+          border: '1px solid #e9ecef'
         }}>
-          {renderSection()}
+          <h4 style={{ marginBottom: '16px' }}>Settings</h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {sections.map(section => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                style={{
+                  padding: '12px',
+                  textAlign: 'left',
+                  backgroundColor: activeSection === section.id ? '#2196F3' : 'transparent',
+                  color: activeSection === section.id ? '#ffffff' : '#495057',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <span>{section.icon}</span>
+                <span style={{ fontSize: '14px' }}>{section.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Save Button */}
-        {hasChanges && (
+        {/* Main Content */}
+        <div style={{ flex: 1 }}>
           <div style={{
-            marginTop: '16px',
-            padding: '16px',
-            backgroundColor: '#fff3cd',
-            border: '1px solid #ffeaa7',
+            padding: '24px',
+            backgroundColor: '#ffffff',
             borderRadius: '8px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
+            border: '1px solid #e9ecef',
+            minHeight: '500px'
           }}>
-            <span style={{ fontSize: '14px', color: '#856404' }}>
-              You have unsaved changes
-            </span>
-            <button
-              onClick={savePreferences}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: '#28a745',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '4px',
-                fontSize: '14px',
-                cursor: 'pointer'
-              }}
-            >
-              Save Changes
-            </button>
+            {renderSection()}
           </div>
-        )}
+
+          {/* Save Button */}
+          {hasChanges && (
+            <div style={{
+              marginTop: '16px',
+              padding: '16px',
+              backgroundColor: '#fff3cd',
+              border: '1px solid #ffeaa7',
+              borderRadius: '8px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '14px', color: '#856404' }}>
+                You have unsaved changes
+              </span>
+              <button
+                onClick={savePreferences}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: '#28a745',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  cursor: 'pointer'
+                }}
+              >
+                Save Changes
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

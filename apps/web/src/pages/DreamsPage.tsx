@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { YStack, XStack } from '@tamagui/stacks';
-import { H2, Paragraph } from '@tamagui/text';
 import { Button } from '@tamagui/button';
 import { Separator } from '@tamagui/separator';
-import { useDreamStore } from '../stores/dreamStore';
-import { DreamVisualizationCharts } from '../components/DreamVisualizationCharts';
+import { XStack, YStack } from '@tamagui/stacks';
+import { H2, Paragraph } from '@tamagui/text';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AdvancedDreamSearch } from '../components/AdvancedDreamSearch';
 import { DreamSharingFeatures } from '../components/DreamSharingFeatures';
-import { UserPreferenceSystem } from '../components/UserPreferenceSystem';
+import { DreamVisualizationCharts } from '../components/DreamVisualizationCharts';
 import PrivacyControlsComponent from '../components/PrivacyControlsComponent';
+import { UserPreferenceSystem } from '../components/UserPreferenceSystem';
+import { useDreamStore } from '../stores/dreamStore';
 
 export function DreamsPage() {
   const navigate = useNavigate();
@@ -65,17 +65,17 @@ export function DreamsPage() {
     return (
       <YStack space="$4" padding="$4" flex={1}>
         <H2>My Dreams</H2>
-        <YStack 
-          padding="$4" 
-          backgroundColor="$red2" 
-          borderRadius="$4" 
-          borderWidth={1} 
+        <YStack
+          padding="$4"
+          backgroundColor="$red2"
+          borderRadius="$4"
+          borderWidth={1}
           borderColor="$red6"
         >
           <Paragraph color="$red11">Error: {error}</Paragraph>
-          <Button 
-            theme="red" 
-            size="$3" 
+          <Button
+            theme="red"
+            size="$3"
             marginTop="$3"
             onPress={fetchDreams}
           >
@@ -100,19 +100,20 @@ export function DreamsPage() {
       case 'dreams':
         return (
           <YStack space="$4">
-            <H2>My Dreams</H2>
-            
+            <H2 data-testid="dream-journal-heading">📚 Dream Journal</H2>
+
             <XStack justifyContent="space-between" alignItems="center">
               <Paragraph color="$gray11">
-                {dreams.length === 0 
-                  ? 'Start your dream journey' 
+                {dreams.length === 0
+                  ? 'Start your dream journey'
                   : `${dreams.length} dream${dreams.length === 1 ? '' : 's'} recorded`
                 }
               </Paragraph>
-              <Button 
-                theme="blue" 
-                size="$3" 
+              <Button
+                theme="blue"
+                size="$3"
                 onPress={handleAddDream}
+                data-testid="add-new-dream-button"
               >
                 Add New Dream
               </Button>
@@ -123,11 +124,11 @@ export function DreamsPage() {
             {/* Dream List */}
             <YStack space="$3">
               {safelyDreams.length === 0 ? (
-                <YStack 
-                  padding="$6" 
-                  alignItems="center" 
+                <YStack
+                  padding="$6"
+                  alignItems="center"
                   space="$4"
-                  backgroundColor="$gray2" 
+                  backgroundColor="$gray2"
                   borderRadius="$4"
                 >
                   <Paragraph fontSize="$6" color="$gray11">
@@ -136,8 +137,8 @@ export function DreamsPage() {
                   <Paragraph color="$gray10" textAlign="center">
                     Start by recording your first dream and unlock the mysteries of your subconscious mind.
                   </Paragraph>
-                  <Button 
-                    theme="blue" 
+                  <Button
+                    theme="blue"
                     size="$4"
                     onPress={handleAddDream}
                   >
@@ -146,13 +147,13 @@ export function DreamsPage() {
                 </YStack>
               ) : (
                 safelyDreams.map((dream) => (
-                  <YStack 
+                  <YStack
                     key={dream.id}
                     data-testid="dream-card"
-                    padding="$4" 
-                    backgroundColor="$gray2" 
-                    borderRadius="$4" 
-                    borderWidth={1} 
+                    padding="$4"
+                    backgroundColor="$gray2"
+                    borderRadius="$4"
+                    borderWidth={1}
                     borderColor="$gray5"
                     hoverStyle={{
                       backgroundColor: '$gray3',
@@ -166,10 +167,10 @@ export function DreamsPage() {
                   >
                     <XStack justifyContent="space-between" alignItems="flex-start">
                       <YStack flex={1} space="$2">
-                        <Paragraph fontSize="$5" fontWeight="600">
+                        <Paragraph fontSize="$5" fontWeight="600" data-testid={`dream-title-${dream.id}`}>
                           {dream.title}
                         </Paragraph>
-                        <Paragraph color="$gray11" numberOfLines={2}>
+                        <Paragraph color="$gray11" numberOfLines={2} data-testid={`dream-content-${dream.id}`}>
                           {dream.content}
                         </Paragraph>
                         <XStack space="$3" alignItems="center" flexWrap="wrap">
@@ -182,9 +183,9 @@ export function DreamsPage() {
                           {dream.tags.length > 0 && (
                             <XStack space="$1">
                               {dream.tags.slice(0, 3).map((tag, index) => (
-                                <Paragraph 
+                                <Paragraph
                                   key={index}
-                                  fontSize="$1" 
+                                  fontSize="$1"
                                   color="$blue10"
                                   backgroundColor="$blue3"
                                   paddingHorizontal="$2"
@@ -203,8 +204,8 @@ export function DreamsPage() {
                           )}
                         </XStack>
                       </YStack>
-                      <Button 
-                        size="$2" 
+                      <Button
+                        size="$2"
                         chromeless
                         onPress={(e) => {
                           e.stopPropagation();
@@ -220,22 +221,22 @@ export function DreamsPage() {
             </YStack>
           </YStack>
         );
-      
+
       case 'search':
         return <AdvancedDreamSearch />;
-      
+
       case 'analytics':
         return <DreamVisualizationCharts />;
-      
+
       case 'sharing':
         return <DreamSharingFeatures />;
-      
+
       case 'preferences':
         return <UserPreferenceSystem />;
-      
+
       case 'privacy':
         return <PrivacyControlsComponent />;
-      
+
       default:
         return null;
     }
@@ -244,10 +245,10 @@ export function DreamsPage() {
   return (
     <YStack space="$4" padding="$4" flex={1}>
       {/* Tab Navigation */}
-      <XStack 
-        space="$2" 
-        padding="$2" 
-        backgroundColor="$gray2" 
+      <XStack
+        space="$2"
+        padding="$2"
+        backgroundColor="$gray2"
         borderRadius="$4"
         flexWrap="wrap"
       >
@@ -259,6 +260,7 @@ export function DreamsPage() {
             backgroundColor={activeTab === tab.id ? "$blue4" : "$gray1"}
             borderColor={activeTab === tab.id ? "$blue8" : "transparent"}
             onPress={() => setActiveTab(tab.id)}
+            data-testid={`tab-${tab.id}`}
           >
             <span style={{ marginRight: '8px' }}>{tab.icon}</span>
             {tab.label}

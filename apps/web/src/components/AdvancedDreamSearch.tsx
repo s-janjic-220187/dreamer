@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { YStack, XStack } from '@tamagui/stacks';
-import { H3, H4, Paragraph } from '@tamagui/text';
 import { Button } from '@tamagui/button';
 import { Separator } from '@tamagui/separator';
+import { XStack, YStack } from '@tamagui/stacks';
+import { H3, H4, Paragraph } from '@tamagui/text';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { useDreams } from '../stores/dreamStore';
 import type { Dream } from '../services/api';
+import { useDreams } from '../stores/dreamStore';
 
 interface SearchFilters {
   query: string;
@@ -38,7 +38,7 @@ export const AdvancedDreamSearch: React.FC = () => {
     sortBy: 'date',
     sortOrder: 'desc'
   });
-  
+
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -51,29 +51,29 @@ export const AdvancedDreamSearch: React.FC = () => {
     negations: string[];
   } => {
     const lowerQuery = query.toLowerCase();
-    
+
     // Extract keywords (remove stop words)
     const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'i', 'me', 'my', 'was', 'is', 'are', 'have', 'had'];
     const keywords = lowerQuery
       .split(/\s+/)
       .filter(word => word.length > 2 && !stopWords.includes(word));
-    
+
     // Extract emotional keywords
     const emotionalWords = ['happy', 'sad', 'scared', 'angry', 'excited', 'worried', 'calm', 'anxious', 'peaceful', 'terrified', 'joyful', 'depressed'];
-    const emotions = keywords.filter(word => 
+    const emotions = keywords.filter(word =>
       emotionalWords.some(emotion => word.includes(emotion) || emotion.includes(word))
     );
-    
+
     // Extract conceptual keywords
     const conceptWords = ['flying', 'falling', 'water', 'fire', 'family', 'friends', 'work', 'school', 'house', 'car', 'animal', 'death', 'birth'];
     const concepts = keywords.filter(word =>
       conceptWords.some(concept => word.includes(concept) || concept.includes(word))
     );
-    
+
     // Extract negations
     const negationWords = lowerQuery.match(/not\s+\w+|no\s+\w+|never\s+\w+|without\s+\w+/g) || [];
     const negations = negationWords.map(phrase => phrase.split(/\s+/)[1]);
-    
+
     return { keywords, emotions, concepts, negations };
   };
 
@@ -81,35 +81,35 @@ export const AdvancedDreamSearch: React.FC = () => {
   const calculateRelevanceScore = (dream: Dream, processedQuery: ReturnType<typeof processSearchQuery>): number => {
     let score = 0;
     const dreamText = `${dream.title} ${dream.content}`.toLowerCase();
-    
+
     // Keyword matches (higher weight for title matches)
     processedQuery.keywords.forEach(keyword => {
       if (dream.title.toLowerCase().includes(keyword)) score += 3;
       if (dream.content.toLowerCase().includes(keyword)) score += 1;
     });
-    
+
     // Emotional matches
     processedQuery.emotions.forEach(emotion => {
       if (dreamText.includes(emotion)) score += 2;
       if (dream.mood === emotion) score += 3;
     });
-    
+
     // Conceptual matches
     processedQuery.concepts.forEach(concept => {
       if (dreamText.includes(concept)) score += 2;
     });
-    
+
     // Tag matches
     const queryTags = processedQuery.keywords.filter(keyword =>
       dream.tags.some(tag => tag.toLowerCase().includes(keyword))
     );
     score += queryTags.length * 2;
-    
+
     // Penalize negations
     processedQuery.negations.forEach(negation => {
       if (dreamText.includes(negation)) score -= 1;
     });
-    
+
     return Math.max(0, score);
   };
 
@@ -128,13 +128,13 @@ export const AdvancedDreamSearch: React.FC = () => {
     return dreams.filter(dream => {
       // Mood filter
       if (filters.mood !== 'all' && dream.mood !== filters.mood) return false;
-      
+
       // Date range filter
       if (filters.dateRange !== 'all') {
         const dreamDate = new Date(dream.date);
         const now = new Date();
         const daysDiff = Math.floor((now.getTime() - dreamDate.getTime()) / (1000 * 60 * 60 * 24));
-        
+
         switch (filters.dateRange) {
           case 'week': if (daysDiff > 7) return false; break;
           case 'month': if (daysDiff > 30) return false; break;
@@ -142,10 +142,10 @@ export const AdvancedDreamSearch: React.FC = () => {
           case 'year': if (daysDiff > 365) return false; break;
         }
       }
-      
+
       // Content length filter
       if (dream.content.length < filters.minLength) return false;
-      
+
       // Tag filter
       if (filters.tags.length > 0) {
         const hasMatchingTag = filters.tags.some(filterTag =>
@@ -153,7 +153,7 @@ export const AdvancedDreamSearch: React.FC = () => {
         );
         if (!hasMatchingTag) return false;
       }
-      
+
       return true;
     });
   };
@@ -183,11 +183,11 @@ export const AdvancedDreamSearch: React.FC = () => {
 
     const processedQuery = processSearchQuery(filters.query);
     const filteredDreams = filterDreams(dreams, filters);
-    
+
     const searchResults: SearchResult[] = filteredDreams
       .map(dream => {
         const relevanceScore = calculateRelevanceScore(dream, processedQuery);
-        
+
         const matchedFields: string[] = [];
         if (processedQuery.keywords.some(kw => dream.title.toLowerCase().includes(kw))) {
           matchedFields.push('title');
@@ -195,16 +195,16 @@ export const AdvancedDreamSearch: React.FC = () => {
         if (processedQuery.keywords.some(kw => dream.content.toLowerCase().includes(kw))) {
           matchedFields.push('content');
         }
-        
+
         const highlights = {
-          title: matchedFields.includes('title') 
+          title: matchedFields.includes('title')
             ? highlightMatches(dream.title, processedQuery.keywords)
             : dream.title,
           content: matchedFields.includes('content')
             ? highlightMatches(dream.content.substring(0, 200) + '...', processedQuery.keywords)
             : dream.content.substring(0, 200) + '...'
         };
-        
+
         return {
           dream,
           relevanceScore,
@@ -215,8 +215,8 @@ export const AdvancedDreamSearch: React.FC = () => {
       .filter(result => result.relevanceScore > 0)
       .sort((a, b) => {
         if (filters.sortBy === 'relevance') {
-          return filters.sortOrder === 'asc' 
-            ? a.relevanceScore - b.relevanceScore 
+          return filters.sortOrder === 'asc'
+            ? a.relevanceScore - b.relevanceScore
             : b.relevanceScore - a.relevanceScore;
         }
         if (filters.sortBy === 'date') {
@@ -225,13 +225,13 @@ export const AdvancedDreamSearch: React.FC = () => {
           return filters.sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
         }
         if (filters.sortBy === 'length') {
-          return filters.sortOrder === 'asc' 
+          return filters.sortOrder === 'asc'
             ? a.dream.content.length - b.dream.content.length
             : b.dream.content.length - a.dream.content.length;
         }
         return 0;
       });
-    
+
     return searchResults;
   }, [dreams, filters]);
 
@@ -262,7 +262,7 @@ export const AdvancedDreamSearch: React.FC = () => {
     <YStack space="$4" padding="$4">
       {/* Header */}
       <XStack justifyContent="space-between" alignItems="center">
-        <H3>🔍 Advanced Dream Search</H3>
+        <H3 data-testid="search-heading">🔍 Advanced Dream Search</H3>
         <Button
           size="$3"
           variant="outlined"
@@ -276,7 +276,7 @@ export const AdvancedDreamSearch: React.FC = () => {
       <YStack space="$3">
         <input
           type="text"
-          placeholder="Search dreams with natural language... (e.g., 'flying dreams with happy emotions', 'nightmares about water')"
+          placeholder="Search dreams..."
           value={filters.query}
           onChange={(e) => updateFilters({ query: e.target.value })}
           style={{
@@ -288,7 +288,7 @@ export const AdvancedDreamSearch: React.FC = () => {
             width: '100%',
           }}
         />
-        
+
         {filters.query && (
           <Paragraph fontSize="$2" color="$gray10">
             Natural Language Processing: Understanding emotions, concepts, and context in your search
@@ -300,7 +300,7 @@ export const AdvancedDreamSearch: React.FC = () => {
       {showFilters && (
         <YStack space="$4" padding="$4" backgroundColor="$gray1" borderRadius="$4">
           <H4>Search Filters</H4>
-          
+
           {/* Mood Filter */}
           <YStack space="$2">
             <Paragraph fontWeight="600">Mood</Paragraph>
@@ -425,10 +425,10 @@ export const AdvancedDreamSearch: React.FC = () => {
         {/* Results List */}
         <YStack space="$3">
           {results.map((result) => (
-            <YStack 
-              key={result.dream.id} 
-              padding="$4" 
-              backgroundColor="$background" 
+            <YStack
+              key={result.dream.id}
+              padding="$4"
+              backgroundColor="$background"
               borderRadius="$4"
               borderWidth={1}
               borderLeftWidth={4}
@@ -453,9 +453,9 @@ export const AdvancedDreamSearch: React.FC = () => {
                 </YStack>
               </XStack>
 
-              <Paragraph 
-                fontSize="$3" 
-                color="$gray11" 
+              <Paragraph
+                fontSize="$3"
+                color="$gray11"
                 marginBottom="$2"
                 dangerouslySetInnerHTML={{ __html: result.highlights.content || result.dream.content.substring(0, 200) + '...' }}
               />
@@ -464,11 +464,11 @@ export const AdvancedDreamSearch: React.FC = () => {
                 <XStack space="$2" marginBottom="$2">
                   <Paragraph fontSize="$1" color="$gray8">Matches:</Paragraph>
                   {result.matchedFields.map(field => (
-                    <YStack 
+                    <YStack
                       key={field}
-                      padding="$1" 
-                      paddingHorizontal="$2" 
-                      backgroundColor="$blue2" 
+                      padding="$1"
+                      paddingHorizontal="$2"
+                      backgroundColor="$blue2"
                       borderRadius="$2"
                     >
                       <Paragraph fontSize="$1" color="$blue10">{field}</Paragraph>
@@ -480,11 +480,11 @@ export const AdvancedDreamSearch: React.FC = () => {
               {result.dream.tags.length > 0 && (
                 <XStack space="$2" flexWrap="wrap">
                   {result.dream.tags.map(tag => (
-                    <YStack 
+                    <YStack
                       key={tag}
-                      padding="$1" 
-                      paddingHorizontal="$2" 
-                      backgroundColor="$gray2" 
+                      padding="$1"
+                      paddingHorizontal="$2"
+                      backgroundColor="$gray2"
                       borderRadius="$2"
                     >
                       <Paragraph fontSize="$1" color="$gray10">#{tag}</Paragraph>

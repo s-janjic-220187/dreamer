@@ -36,7 +36,7 @@ export interface DreamSymbol {
 
 export type DreamMood = 'positive' | 'negative' | 'neutral' | 'mixed';
 
-export type SymbolCategory = 
+export type SymbolCategory =
   | 'people'
   | 'animals'
   | 'objects'
@@ -90,6 +90,9 @@ export interface DreamSearchResult {
 export interface AIAnalysisRequest {
   dreamContent: string;
   dreamTitle?: string;
+  dreamId?: string;
+  mood?: DreamMood;
+  tags?: string[];
   previousAnalyses?: DreamAnalysis[];
   userPreferences?: UserPreferences;
 }
@@ -100,6 +103,14 @@ export interface AIAnalysisResponse {
   themes: string[];
   emotions: string[];
   confidence: number;
+}
+
+export interface AIInsight {
+  type: 'pattern' | 'symbol' | 'emotion' | 'suggestion';
+  title: string;
+  description: string;
+  confidence: number;
+  relatedDreams?: string[];
 }
 
 // User preferences and settings

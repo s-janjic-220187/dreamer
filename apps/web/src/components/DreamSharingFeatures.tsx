@@ -82,9 +82,9 @@ export const DreamSharingFeatures: React.FC = () => {
   };
 
   const toggleLinkStatus = (linkId: string) => {
-    setShareLinks(links => 
-      links.map(link => 
-        link.id === linkId 
+    setShareLinks(links =>
+      links.map(link =>
+        link.id === linkId
           ? { ...link, isActive: !link.isActive }
           : link
       )
@@ -99,6 +99,7 @@ export const DreamSharingFeatures: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <h2 data-testid="sharing-features-heading">Dream Sharing Features</h2>
       {/* Share Your Dreams */}
       <div style={{
         padding: '24px',
@@ -107,15 +108,15 @@ export const DreamSharingFeatures: React.FC = () => {
         border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>Share Your Dreams</h3>
-        
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* Dream Selection */}
           <div>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '8px', 
+            <label style={{
+              display: 'block',
+              marginBottom: '8px',
               fontSize: '14px',
-              fontWeight: '500' 
+              fontWeight: '500'
             }}>
               Select Dream to Share:
             </label>
@@ -141,11 +142,11 @@ export const DreamSharingFeatures: React.FC = () => {
 
           {/* Permission Selection */}
           <div>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '8px', 
+            <label style={{
+              display: 'block',
+              marginBottom: '8px',
               fontSize: '14px',
-              fontWeight: '500' 
+              fontWeight: '500'
             }}>
               Sharing Permissions:
             </label>
@@ -202,7 +203,7 @@ export const DreamSharingFeatures: React.FC = () => {
           border: '1px solid #e9ecef'
         }}>
           <h3 style={{ marginBottom: '16px' }}>Your Shared Dreams</h3>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {shareLinks.map(link => {
               const dream = dreams.find(d => d.id === link.dreamId);
@@ -228,7 +229,7 @@ export const DreamSharingFeatures: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button
                         onClick={() => copyToClipboard(link.url)}
@@ -260,7 +261,7 @@ export const DreamSharingFeatures: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div style={{
                     fontSize: '12px',
                     color: '#6c757d',
@@ -287,10 +288,10 @@ export const DreamSharingFeatures: React.FC = () => {
         border: '1px solid #e9ecef'
       }}>
         <h3 style={{ marginBottom: '16px' }}>Community Dreams</h3>
-        <p style={{ 
-          fontSize: '14px', 
-          color: '#6c757d', 
-          marginBottom: '20px' 
+        <p style={{
+          fontSize: '14px',
+          color: '#6c757d',
+          marginBottom: '20px'
         }}>
           Explore dreams shared by other dreamers in our community
         </p>
@@ -312,9 +313,9 @@ export const DreamSharingFeatures: React.FC = () => {
                 </div>
               </div>
 
-              <p style={{ 
-                fontSize: '14px', 
-                lineHeight: '1.5', 
+              <p style={{
+                fontSize: '14px',
+                lineHeight: '1.5',
                 marginBottom: '12px',
                 color: '#495057'
               }}>
@@ -342,10 +343,10 @@ export const DreamSharingFeatures: React.FC = () => {
               </div>
 
               {/* Engagement */}
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between' 
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}>
                 <div style={{ display: 'flex', gap: '16px', fontSize: '14px', color: '#6c757d' }}>
                   <button style={{

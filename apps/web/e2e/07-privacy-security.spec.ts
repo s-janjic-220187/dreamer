@@ -5,7 +5,7 @@ test.describe('Privacy Controls - Phase 5.3 Security Features', () => {
     await page.goto('/dreams')
     
     // Navigate to Privacy tab
-    await page.getByText('Privacy').click()
+    await page.getByTestId('tab-privacy').click()
   })
 
   test('should display privacy controls interface', async ({ page }) => {
@@ -172,7 +172,7 @@ test.describe('Data Security Validation', () => {
     
     // Navigate to privacy settings
     await page.goto('/dreams')
-    await page.getByText('Privacy').click()
+    await page.getByTestId('tab-privacy').click()
     
     // Should be able to access privacy controls
     await expect(page.getByText('Privacy Controls')).toBeVisible()

@@ -7,7 +7,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/apps/api/src/index.ts",
       "cwd": "${workspaceFolder}/apps/api",
-      "runtimeArgs": ["--loader", "tsx/esm"],
+      "runtimeArgs": [
+        "--loader",
+        "tsx/esm"
+      ],
       "env": {
         "NODE_ENV": "development"
       },
@@ -15,14 +18,18 @@
       "internalConsoleOptions": "neverOpen",
       "restart": true,
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     },
     {
       "name": "🌐 Debug Web App",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/vite",
-      "args": ["dev"],
+      "args": [
+        "dev"
+      ],
       "cwd": "${workspaceFolder}/apps/web",
       "env": {
         "NODE_ENV": "development"
@@ -32,10 +39,13 @@
     },
     {
       "name": "🧪 Debug Tests",
-      "type": "node", 
+      "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/vitest",
-      "args": ["run", "--reporter=verbose"],
+      "args": [
+        "run",
+        "--reporter=verbose"
+      ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

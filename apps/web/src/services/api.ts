@@ -68,7 +68,7 @@ async function apiRequest<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
@@ -83,18 +83,18 @@ async function apiRequest<T>(
 
   try {
     const response = await fetch(url, config);
-    
+
     if (!response.ok) {
       let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
       let errorData;
-      
+
       try {
         errorData = await response.json();
         errorMessage = errorData.message || errorMessage;
       } catch {
         // If response is not JSON, use status text
       }
-      
+
       throw new ApiError(errorMessage, response.status, errorData);
     }
 
@@ -108,7 +108,7 @@ async function apiRequest<T>(
     if (error instanceof ApiError) {
       throw error;
     }
-    
+
     // Network or other errors
     throw new ApiError(
       `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -141,23 +141,41 @@ export const dreamsApi = {
 
   // Get dream by ID
   async getDreamById(id: string): Promise<Dream> {
-    return apiRequest<Dream>(`/dreams/${id}`);
+    const response = await apiRequest<any>(`/dreams/${id}`);
+    // Handle wrapped response format from API
+    if (response && response.data) {
+      return response.data;
+    }
+    // Handle direct response
+    return response;
   },
 
   // Create new dream
   async createDream(dream: CreateDreamRequest): Promise<Dream> {
-    return apiRequest<Dream>('/dreams', {
+    const response = await apiRequest<any>('/dreams', {
       method: 'POST',
       body: JSON.stringify(dream),
     });
+    // Handle wrapped response format from API
+    if (response && response.data) {
+      return response.data;
+    }
+    // Handle direct response
+    return response;
   },
 
   // Update dream
   async updateDream(id: string, dream: UpdateDreamRequest): Promise<Dream> {
-    return apiRequest<Dream>(`/dreams/${id}`, {
+    const response = await apiRequest<any>(`/dreams/${id}`, {
       method: 'PUT',
       body: JSON.stringify(dream),
     });
+    // Handle wrapped response format from API
+    if (response && response.data) {
+      return response.data;
+    }
+    // Handle direct response
+    return response;
   },
 
   // Delete dream

@@ -3,7 +3,7 @@
  * Comprehensive privacy management interface with granular controls and GDPR compliance
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { dataEncryptionService } from '../services/dataEncryption';
 import './PrivacyControls.css';
 
@@ -128,12 +128,12 @@ export const PrivacyControlsComponent: React.FC = () => {
     try {
       // Test encryption with user password
       const testResult = await dataEncryptionService.testEncryption('test_user');
-      
+
       if (testResult) {
-        const newSettings = { 
-          ...settings, 
-          dataEncryption: true, 
-          encryptionPassword: encryptionPassword 
+        const newSettings = {
+          ...settings,
+          dataEncryption: true,
+          encryptionPassword: encryptionPassword
         };
         savePrivacySettings(newSettings);
         setEncryptionTest({ status: 'success', message: 'Encryption setup successful!' });
@@ -204,7 +204,7 @@ export const PrivacyControlsComponent: React.FC = () => {
   const renderGeneralTab = () => (
     <div className="privacy-tab-content">
       <h3>General Privacy Settings</h3>
-      
+
       <div className="privacy-setting-group">
         <label className="privacy-setting">
           <input
@@ -235,9 +235,9 @@ export const PrivacyControlsComponent: React.FC = () => {
           <select
             id="profile-visibility"
             value={settings.profileVisibility}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              profileVisibility: e.target.value as 'private' | 'public' | 'friends' 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              profileVisibility: e.target.value as 'private' | 'public' | 'friends'
             })}
           >
             <option value="private">Private</option>
@@ -249,7 +249,7 @@ export const PrivacyControlsComponent: React.FC = () => {
 
       <div className="privacy-setting-group">
         <h4>Cookie Preferences</h4>
-        
+
         <label className="privacy-setting">
           <input
             type="checkbox"
@@ -266,8 +266,8 @@ export const PrivacyControlsComponent: React.FC = () => {
           <input
             type="checkbox"
             checked={settings.cookies.analytics}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
               cookies: { ...settings.cookies, analytics: e.target.checked }
             })}
           />
@@ -281,8 +281,8 @@ export const PrivacyControlsComponent: React.FC = () => {
           <input
             type="checkbox"
             checked={settings.cookies.personalization}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
               cookies: { ...settings.cookies, personalization: e.target.checked }
             })}
           />
@@ -298,14 +298,14 @@ export const PrivacyControlsComponent: React.FC = () => {
   const renderEncryptionTab = () => (
     <div className="privacy-tab-content">
       <h3>Data Encryption</h3>
-      
+
       <div className="encryption-status">
         <div className="encryption-indicator">
           <div className={`encryption-status-light ${settings.dataEncryption ? 'active' : 'inactive'}`}></div>
           <span>Encryption {settings.dataEncryption ? 'Enabled' : 'Disabled'}</span>
         </div>
-        
-        <button 
+
+        <button
           onClick={handleEncryptionToggle}
           className={`encryption-toggle-btn ${settings.dataEncryption ? 'enabled' : 'disabled'}`}
         >
@@ -336,7 +336,7 @@ export const PrivacyControlsComponent: React.FC = () => {
         <div className="modal-overlay">
           <div className="password-modal">
             <h3>Setup Encryption Password</h3>
-            
+
             <div className="password-form">
               <label>
                 Encryption Password:
@@ -347,7 +347,7 @@ export const PrivacyControlsComponent: React.FC = () => {
                   placeholder="Enter a strong password"
                 />
               </label>
-              
+
               <label>
                 Confirm Password:
                 <input
@@ -366,7 +366,7 @@ export const PrivacyControlsComponent: React.FC = () => {
 
               <div className="password-modal-buttons">
                 <button onClick={() => setShowPasswordModal(false)}>Cancel</button>
-                <button 
+                <button
                   onClick={setupEncryption}
                   disabled={encryptionTest.status === 'testing'}
                 >
@@ -383,17 +383,17 @@ export const PrivacyControlsComponent: React.FC = () => {
   const renderSharingTab = () => (
     <div className="privacy-tab-content">
       <h3>Dream Sharing & Community</h3>
-      
+
       <div className="privacy-setting-group">
         <label className="privacy-setting">
           <input
             type="checkbox"
             checked={settings.dreamSharingDefaults.allowSharing}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dreamSharingDefaults: { 
-                ...settings.dreamSharingDefaults, 
-                allowSharing: e.target.checked 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dreamSharingDefaults: {
+                ...settings.dreamSharingDefaults,
+                allowSharing: e.target.checked
               }
             })}
           />
@@ -408,11 +408,11 @@ export const PrivacyControlsComponent: React.FC = () => {
           <select
             id="share-level"
             value={settings.dreamSharingDefaults.shareLevel}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dreamSharingDefaults: { 
-                ...settings.dreamSharingDefaults, 
-                shareLevel: e.target.value as 'none' | 'anonymous' | 'attributed' 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dreamSharingDefaults: {
+                ...settings.dreamSharingDefaults,
+                shareLevel: e.target.value as 'none' | 'anonymous' | 'attributed'
               }
             })}
           >
@@ -426,11 +426,11 @@ export const PrivacyControlsComponent: React.FC = () => {
           <input
             type="checkbox"
             checked={settings.dreamSharingDefaults.communityParticipation}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dreamSharingDefaults: { 
-                ...settings.dreamSharingDefaults, 
-                communityParticipation: e.target.checked 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dreamSharingDefaults: {
+                ...settings.dreamSharingDefaults,
+                communityParticipation: e.target.checked
               }
             })}
           />
@@ -446,17 +446,17 @@ export const PrivacyControlsComponent: React.FC = () => {
   const renderRetentionTab = () => (
     <div className="privacy-tab-content">
       <h3>Data Retention</h3>
-      
+
       <div className="privacy-setting-group">
         <label className="privacy-setting">
           <input
             type="checkbox"
             checked={settings.dataRetention.keepDreams}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dataRetention: { 
-                ...settings.dataRetention, 
-                keepDreams: e.target.checked 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dataRetention: {
+                ...settings.dataRetention,
+                keepDreams: e.target.checked
               }
             })}
           />
@@ -471,11 +471,11 @@ export const PrivacyControlsComponent: React.FC = () => {
           <select
             id="retention-period"
             value={settings.dataRetention.retentionPeriod}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dataRetention: { 
-                ...settings.dataRetention, 
-                retentionPeriod: e.target.value as 'indefinite' | '1year' | '2years' | '5years' 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dataRetention: {
+                ...settings.dataRetention,
+                retentionPeriod: e.target.value as 'indefinite' | '1year' | '2years' | '5years'
               }
             })}
           >
@@ -490,11 +490,11 @@ export const PrivacyControlsComponent: React.FC = () => {
           <input
             type="checkbox"
             checked={settings.dataRetention.autoDelete}
-            onChange={(e) => savePrivacySettings({ 
-              ...settings, 
-              dataRetention: { 
-                ...settings.dataRetention, 
-                autoDelete: e.target.checked 
+            onChange={(e) => savePrivacySettings({
+              ...settings,
+              dataRetention: {
+                ...settings.dataRetention,
+                autoDelete: e.target.checked
               }
             })}
           />
@@ -510,14 +510,14 @@ export const PrivacyControlsComponent: React.FC = () => {
   const renderGDPRTab = () => (
     <div className="privacy-tab-content">
       <h3>GDPR Rights & Compliance</h3>
-      
+
       <div className="gdpr-info">
         <p>Under GDPR, you have the right to control your personal data. Manage your consent and exercise your rights below.</p>
       </div>
 
       <div className="privacy-setting-group">
         <h4>Data Processing Consent</h4>
-        
+
         <label className="privacy-setting">
           <input
             type="checkbox"
@@ -557,16 +557,16 @@ export const PrivacyControlsComponent: React.FC = () => {
 
       <div className="gdpr-actions">
         <h4>Data Rights</h4>
-        
+
         <div className="gdpr-action-buttons">
-          <button 
+          <button
             onClick={exportUserData}
             className="gdpr-action-btn export"
           >
             Export My Data
           </button>
-          
-          <button 
+
+          <button
             onClick={deleteAllData}
             className="gdpr-action-btn delete"
           >
@@ -586,36 +586,36 @@ export const PrivacyControlsComponent: React.FC = () => {
   return (
     <div className="privacy-controls">
       <div className="privacy-header">
-        <h2>Privacy & Security Settings</h2>
+        <h2 data-testid="privacy-controls-heading">Privacy Controls</h2>
         <p>Manage your privacy preferences and data security settings</p>
       </div>
 
       <div className="privacy-tabs">
-        <button 
+        <button
           className={`privacy-tab ${activeTab === 'general' ? 'active' : ''}`}
           onClick={() => setActiveTab('general')}
         >
           General
         </button>
-        <button 
+        <button
           className={`privacy-tab ${activeTab === 'encryption' ? 'active' : ''}`}
           onClick={() => setActiveTab('encryption')}
         >
           Encryption
         </button>
-        <button 
+        <button
           className={`privacy-tab ${activeTab === 'sharing' ? 'active' : ''}`}
           onClick={() => setActiveTab('sharing')}
         >
           Sharing
         </button>
-        <button 
+        <button
           className={`privacy-tab ${activeTab === 'retention' ? 'active' : ''}`}
           onClick={() => setActiveTab('retention')}
         >
           Data Retention
         </button>
-        <button 
+        <button
           className={`privacy-tab ${activeTab === 'gdpr' ? 'active' : ''}`}
           onClick={() => setActiveTab('gdpr')}
         >

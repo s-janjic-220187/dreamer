@@ -5,7 +5,7 @@ test.describe('Cross-Browser Compatibility', () => {
     test.skip(browserName !== 'chromium', 'This test is for Chromium only')
     
     await page.goto('/')
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     
     // Test core functionality
     await page.getByRole('link', { name: /start analyzing dreams/i }).click()
@@ -16,7 +16,7 @@ test.describe('Cross-Browser Compatibility', () => {
     test.skip(browserName !== 'firefox', 'This test is for Firefox only')
     
     await page.goto('/')
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     
     // Test core functionality
     await page.getByRole('link', { name: /start analyzing dreams/i }).click()
@@ -27,7 +27,7 @@ test.describe('Cross-Browser Compatibility', () => {
     test.skip(browserName !== 'webkit', 'This test is for WebKit only')
     
     await page.goto('/')
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     
     // Test core functionality
     await page.getByRole('link', { name: /start analyzing dreams/i }).click()
@@ -42,7 +42,7 @@ test.describe('Mobile Responsive Design', () => {
     await page.goto('/')
     
     // Check mobile layout
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     await expect(page.getByRole('link', { name: /start analyzing dreams/i })).toBeVisible()
     
     // Navigation should work on mobile
@@ -50,7 +50,7 @@ test.describe('Mobile Responsive Design', () => {
     await expect(page).toHaveURL('/dreams')
     
     // Tabs should be accessible
-    await expect(page.getByText('Dreams')).toBeVisible()
+    await expect(page.getByTestId('tab-dreams')).toBeVisible()
   })
 
   test('should display correctly on mobile landscape', async ({ page }) => {
@@ -58,8 +58,8 @@ test.describe('Mobile Responsive Design', () => {
     
     await page.goto('/dreams')
     
-    await expect(page.getByText('Dream Journal')).toBeVisible()
-    await expect(page.getByText('Add New Dream')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
+    await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
   })
 
   test('should display correctly on tablet', async ({ page }) => {
@@ -67,11 +67,11 @@ test.describe('Mobile Responsive Design', () => {
     
     await page.goto('/dreams')
     
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
     
     // Test tab navigation on tablet
-    await page.getByText('Analytics').click()
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await page.getByTestId('tab-analytics').click()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
   })
 
   test('should handle touch interactions', async ({ page }) => {
@@ -92,7 +92,7 @@ test.describe('Performance and Loading', () => {
     const startTime = Date.now()
     
     await page.goto('/')
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     
     const loadTime = Date.now() - startTime
     expect(loadTime).toBeLessThan(5000) // Should load within 5 seconds
@@ -103,7 +103,7 @@ test.describe('Performance and Loading', () => {
     
     const startTime = Date.now()
     await page.getByRole('link', { name: /start analyzing dreams/i }).click()
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
     
     const navigationTime = Date.now() - startTime
     expect(navigationTime).toBeLessThan(3000) // Navigation should be quick
@@ -120,7 +120,7 @@ test.describe('Performance and Loading', () => {
     })
     
     // Page should remain responsive
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 })
 
@@ -162,7 +162,7 @@ test.describe('Accessibility Compliance', () => {
     await page.goto('/')
     
     // Check that text is visible (basic contrast check)
-    await expect(page.getByText('Welcome to Dream Analyzer')).toBeVisible()
+    await expect(page.getByTestId('homepage-title')).toBeVisible()
     await expect(page.getByText('Features')).toBeVisible()
   })
 })
@@ -177,7 +177,7 @@ test.describe('Error Handling and Edge Cases', () => {
     
     // Try navigating to a valid page
     await page.goto('/dreams')
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 
   test('should handle network errors gracefully', async ({ page }) => {
@@ -195,7 +195,7 @@ test.describe('Error Handling and Edge Cases', () => {
     await page.context().setOffline(false)
     
     await page.goto('/dreams')
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 
   test('should handle rapid user interactions', async ({ page }) => {
@@ -203,13 +203,13 @@ test.describe('Error Handling and Edge Cases', () => {
     
     // Rapid tab switching
     for (let i = 0; i < 5; i++) {
-      await page.getByText('Analytics').click()
-      await page.getByText('Dreams').click()
-      await page.getByText('Search').click()
-      await page.getByText('Dreams').click()
+      await page.getByTestId('tab-analytics').click()
+      await page.getByTestId('tab-dreams').click()
+      await page.getByTestId('tab-search').click()
+      await page.getByTestId('tab-dreams').click()
     }
     
     // App should remain stable
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 })

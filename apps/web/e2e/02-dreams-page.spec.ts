@@ -6,64 +6,64 @@ test.describe('Dreams Page Core Features', () => {
   })
 
   test('should display dreams page with all tabs', async ({ page }) => {
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
     
     // Check for the 6-tab interface from Phase 5.2
-    await expect(page.getByText('Dreams')).toBeVisible()
-    await expect(page.getByText('Analytics')).toBeVisible()
-    await expect(page.getByText('Search')).toBeVisible()
-    await expect(page.getByText('Sharing')).toBeVisible()
-    await expect(page.getByText('Preferences')).toBeVisible()
-    await expect(page.getByText('Privacy')).toBeVisible()
+    await expect(page.getByTestId('tab-dreams')).toBeVisible()
+    await expect(page.getByTestId('tab-analytics')).toBeVisible()
+    await expect(page.getByTestId('tab-search')).toBeVisible()
+    await expect(page.getByTestId('tab-sharing')).toBeVisible()
+    await expect(page.getByTestId('tab-preferences')).toBeVisible()
+    await expect(page.getByTestId('tab-privacy')).toBeVisible()
   })
 
   test('should navigate between tabs correctly', async ({ page }) => {
     // Test Analytics tab
-    await page.getByText('Analytics').click()
-    await expect(page.getByText('Dream Analytics Dashboard')).toBeVisible()
+    await page.getByTestId('tab-analytics').click()
+    await expect(page.getByTestId('analytics-dashboard-heading')).toBeVisible()
     
     // Test Search tab
-    await page.getByText('Search').click()
-    await expect(page.getByText('Advanced Dream Search')).toBeVisible()
+    await page.getByTestId('tab-search').click()
+    await expect(page.getByTestId('search-heading')).toBeVisible()
     
     // Test Sharing tab
-    await page.getByText('Sharing').click()
-    await expect(page.getByText('Dream Sharing Features')).toBeVisible()
+    await page.getByTestId('tab-sharing').click()
+    await expect(page.getByTestId('sharing-features-heading')).toBeVisible()
     
     // Test Preferences tab
-    await page.getByText('Preferences').click()
-    await expect(page.getByText('User Preference System')).toBeVisible()
+    await page.getByTestId('tab-preferences').click()
+    await expect(page.getByTestId('preferences-system-heading')).toBeVisible()
     
     // Test Privacy tab
-    await page.getByText('Privacy').click()
+    await page.getByTestId('tab-privacy').click()
     await expect(page.getByText('Privacy Controls')).toBeVisible()
     
     // Go back to Dreams tab
-    await page.getByText('Dreams').click()
-    await expect(page.getByText('Add New Dream')).toBeVisible()
+    await page.getByTestId('tab-dreams').click()
+    await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
   })
 
   test('should display Add New Dream button', async ({ page }) => {
-    await expect(page.getByText('Add New Dream')).toBeVisible()
+    await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
   })
 
   test('should navigate to new dream page when Add New Dream is clicked', async ({ page }) => {
-    await page.getByText('Add New Dream').click()
+    await page.getByTestId('add-new-dream-button').click()
     await expect(page).toHaveURL('/dreams/new')
   })
 
   test('should handle empty dreams state gracefully', async ({ page }) => {
     // The page should load even if no dreams exist
-    await expect(page.getByText('Dream Journal')).toBeVisible()
-    await expect(page.getByText('Add New Dream')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
+    await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
   })
 
   test('should be responsive on mobile devices', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     
-    await expect(page.getByText('Dream Journal')).toBeVisible()
-    await expect(page.getByText('Dreams')).toBeVisible()
-    await expect(page.getByText('Add New Dream')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
+    await expect(page.getByTestId('tab-dreams')).toBeVisible()
+    await expect(page.getByTestId('add-new-dream-button')).toBeVisible()
   })
 })
 
@@ -104,6 +104,6 @@ test.describe('Dreams List and Display', () => {
     })
     
     // Page should remain stable
-    await expect(page.getByText('Dream Journal')).toBeVisible()
+    await expect(page.getByTestId('dream-journal-heading')).toBeVisible()
   })
 })

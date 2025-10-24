@@ -64,11 +64,16 @@ class AIService {
         });
 
         if (response.ok) {
-          const analysis = await response.json();
-          return {
-            ...analysis,
-            createdAt: new Date(analysis.createdAt),
-          };
+          const responseData = await response.json();
+          // Backend returns { success: true, data: analysis, timestamp: ... }
+          if (responseData.success && responseData.data) {
+            const analysis = responseData.data;
+            return {
+              ...analysis,
+              createdAt: new Date(analysis.createdAt),
+            };
+          }
+          throw new Error('Invalid response format from API');
         }
       } catch (apiError) {
         console.log('API endpoint not available, using fallback analysis');
@@ -100,7 +105,12 @@ class AIService {
         throw new Error(`Pattern analysis failed: ${response.statusText}`);
       }
 
-      return await response.json();
+      const responseData = await response.json();
+      // Backend returns { success: true, data: insights, timestamp: ... }
+      if (responseData.success && responseData.data) {
+        return responseData.data;
+      }
+      throw new Error('Invalid response format from patterns API');
     } catch (error) {
       console.error('Pattern analysis failed:', error);
       throw new Error('Failed to analyze patterns. Please try again later.');
@@ -124,7 +134,12 @@ class AIService {
         throw new Error(`Insights failed: ${response.statusText}`);
       }
 
-      return await response.json();
+      const responseData = await response.json();
+      // Backend returns { success: true, data: insights, timestamp: ... }
+      if (responseData.success && responseData.data) {
+        return responseData.data;
+      }
+      throw new Error('Invalid response format from insights API');
     } catch (error) {
       console.error('Insights failed:', error);
       throw new Error('Failed to get insights. Please try again later.');
@@ -161,12 +176,12 @@ class AIService {
    */
   async generateFallbackAnalysis(request: AIAnalysisRequest): Promise<DreamAnalysis> {
     const dreamText = request.dreamContent.toLowerCase();
-    
+
     // Simple keyword-based analysis
     const themes = this.extractThemes(dreamText);
     const symbols = this.extractSymbols(dreamText);
     const emotions = this.extractEmotions(dreamText, request.mood);
-    
+
     return {
       id: `fallback-${Date.now()}`,
       dreamId: 'unknown',
@@ -235,7 +250,7 @@ class AIService {
     };
 
     const foundEmotions: Array<{ emotion: string; intensity: number }> = [];
-    
+
     // Add mood-based emotion if provided
     if (mood && mood !== 'neutral') {
       let moodEmotion = '';
@@ -271,20 +286,20 @@ class AIService {
 
   private generateBasicInterpretation(themes: string[], symbols: Array<{ symbol: string; meaning: string; confidence: number }>, emotions: Array<{ emotion: string; intensity: number }>): string {
     let interpretation = "This dream appears to reflect ";
-    
+
     if (emotions.length > 0) {
       const dominantEmotion = emotions.sort((a, b) => b.intensity - a.intensity)[0];
       interpretation += `${dominantEmotion.emotion} `;
     }
-    
+
     if (themes.length > 0) {
       interpretation += `related to ${themes.join(', ')}. `;
     }
-    
+
     if (symbols.length > 0) {
       interpretation += `The presence of symbols like ${symbols.map(s => s.symbol).join(', ')} suggests themes of transformation and personal growth.`;
     }
-    
+
     return interpretation || "This dream contains personal symbols that may be meaningful to your current life situation.";
   }
 
@@ -293,15 +308,15 @@ class AIService {
       "Consider keeping a regular dream journal to track patterns over time.",
       "Reflect on how the emotions in your dream relate to your waking life.",
     ];
-    
+
     if (themes.includes('fear') || emotions.some(e => e.emotion === 'fear')) {
       suggestions.push("Practice relaxation techniques before bed to promote more peaceful dreams.");
     }
-    
+
     if (themes.includes('relationships')) {
       suggestions.push("Consider how your relationships are reflected in your dreams and what they might be telling you.");
     }
-    
+
     return suggestions;
   }
 }

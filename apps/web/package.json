@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@dreamer/shared": "workspace:^",
+    "@tamagui/adapt": "^1.135.4",
     "@tamagui/animations-react-native": "^1.134.0",
     "@tamagui/button": "^1.134.0",
     "@tamagui/config": "^1.134.0",
@@ -31,6 +32,7 @@
     "@tamagui/label": "^1.134.0",
     "@tamagui/select": "^1.134.0",
     "@tamagui/separator": "^1.134.0",
+    "@tamagui/sheet": "^1.135.4",
     "@tamagui/stacks": "^1.134.0",
     "@tamagui/text": "^1.134.0",
     "@tamagui/vite-plugin": "^1.134.0",

@@ -93,9 +93,9 @@
 .privacy-setting input[type="checkbox"] {
   margin-right: 12px;
   transform: scale(1.2);
-  accent-color: hsl(var(--blue8));
-  background-color: hsl(var(--background));
-  border: 1px solid hsl(var(--border-color));
+  accent-color: #007acc;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
 }
 
 .privacy-setting-label {
@@ -115,9 +115,9 @@
   padding: 8px 12px;
   border-width: 1px;
   border-style: solid;
-  border-color: hsl(var(--border-color));
-  background-color: hsl(var(--background));
-  color: hsl(var(--color));
+  border-color: #d1d5db;
+  background-color: #ffffff;
+  color: #333333;
   border-radius: 4px;
   font-size: 14px;
   margin-top: 8px;
@@ -169,7 +169,8 @@
   color: white;
 }
 
-.encryption-info, .encryption-technical-info {
+.encryption-info,
+.encryption-technical-info {
   background: #e3f2fd;
   padding: 20px;
   border-radius: 6px;
@@ -313,4 +314,19 @@
   font-size: 14px;
   color: #666;
   margin-top: 16px;
+}
+
+/* Dark mode styles for privacy controls */
+@media (prefers-color-scheme: dark) {
+  .privacy-setting input[type="checkbox"] {
+    accent-color: #4a9eff;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+  }
+
+  .privacy-setting select {
+    border-color: #555;
+    background-color: #2a2a2a;
+    color: rgba(255, 255, 255, 0.87);
+  }
 }

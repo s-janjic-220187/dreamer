@@ -7,7 +7,7 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
+
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
   background-color: #ffffff;
@@ -18,7 +18,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -42,6 +43,7 @@ a {
   text-decoration: none;
   transition: color 0.2s;
 }
+
 a:hover {
   color: #0066a3;
   text-decoration: underline;
@@ -57,7 +59,12 @@ button {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0 0 1rem 0;
   font-weight: 600;
   line-height: 1.2;
@@ -68,17 +75,19 @@ p {
 }
 
 /* Form elements theming */
-input[type="checkbox"] {
-  accent-color: hsl(var(--blue8));
-  background-color: hsl(var(--background));
-  border: 1px solid hsl(var(--border-color));
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #007acc;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked {
-  accent-color: hsl(var(--blue8));
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  accent-color: #007acc;
 }
 
 /* Dark mode */
@@ -87,11 +96,25 @@ input[type="checkbox"]:checked {
     color: rgba(255, 255, 255, 0.87);
     background-color: #1a1a1a;
   }
-  
+
   a {
     color: #4a9eff;
   }
+
   a:hover {
     color: #66b3ff;
+  }
+
+  /* Dark mode form elements */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: #4a9eff;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+  }
+
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    accent-color: #4a9eff;
   }
 }

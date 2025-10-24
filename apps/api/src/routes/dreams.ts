@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { dreamService } from '../services/dream.service';
+import type { CreateDreamInput, UpdateDreamInput, DreamSearchParams } from '@dreamer/shared';
 
 export async function dreamRoutes(fastify: FastifyInstance) {
   // Create a new dream
@@ -30,7 +31,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
     },
     handler: async (request, reply) => {
       try {
-        const dream = await dreamService.createDream(request.body);
+        const dream = await dreamService.createDream(request.body as CreateDreamInput);
         return reply.code(201).send({
           success: true,
           data: dream,
@@ -87,7 +88,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
     },
     handler: async (request, reply) => {
       try {
-        const result = await dreamService.searchDreams(request.query);
+        const result = await dreamService.searchDreams(request.query as DreamSearchParams);
         return reply.send({
           success: true,
           data: result,
@@ -178,7 +179,7 @@ export async function dreamRoutes(fastify: FastifyInstance) {
     handler: async (request, reply) => {
       try {
         const { id } = request.params as { id: string };
-        const dream = await dreamService.updateDream(id, request.body);
+        const dream = await dreamService.updateDream(id, request.body as UpdateDreamInput);
         
         if (!dream) {
           return reply.code(404).send({

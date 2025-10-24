@@ -18,7 +18,7 @@ export class DreamService {
         date: data.date || new Date(),
         tags: JSON.stringify(data.tags || []),
         mood: data.mood || 'neutral',
-        audioPath: data.audioPath,
+        audioPath: data.audioPath || null,
       },
       include: {
         analyses: true,
@@ -189,18 +189,24 @@ export class DreamService {
   }
 
   private mapDreamFromDb(dbDream: any): Dream {
-    return {
+    const dream: Dream = {
       id: dbDream.id,
       title: dbDream.title,
       content: dbDream.content,
       date: dbDream.date,
       tags: JSON.parse(dbDream.tags || '[]'),
       mood: dbDream.mood as any,
-      analysis: dbDream.analyses?.[0] ? this.mapAnalysisFromDb(dbDream.analyses[0]) : undefined,
       audioPath: dbDream.audioPath,
       createdAt: dbDream.createdAt,
       updatedAt: dbDream.updatedAt,
     };
+
+    // Only add analysis if it exists
+    if (dbDream.analyses?.[0]) {
+      dream.analysis = this.mapAnalysisFromDb(dbDream.analyses[0]);
+    }
+
+    return dream;
   }
 
   private mapAnalysisFromDb(dbAnalysis: any): DreamAnalysis {

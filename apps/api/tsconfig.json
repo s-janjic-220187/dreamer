@@ -5,7 +5,6 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist",
-    "rootDir": "./src",
     "types": ["node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -15,10 +14,16 @@
     "resolveJsonModule": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "../../",
+    "paths": {
+      "@dreamer/shared": ["./libs/shared/src/index.ts"],
+      "@dreamer/shared/*": ["./libs/shared/src/*"]
+    }
   },
   "include": [
     "src/**/*",
+    "../../libs/shared/src/**/*",
     "prisma/schema.prisma"
   ],
   "exclude": [

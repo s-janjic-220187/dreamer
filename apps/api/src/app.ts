@@ -34,12 +34,12 @@ export function build(opts: { logger?: boolean | object } = {}): FastifyInstance
   });
 
   // Health check endpoint
-  app.get('/health', async (request, reply) => {
-    return {
+  app.get('/health', async (_request, reply) => {
+    return reply.send({
       status: 'ok',
       timestamp: new Date().toISOString(),
       version: '0.1.0',
-    };
+    });
   });
 
   // Register routes
@@ -47,7 +47,7 @@ export function build(opts: { logger?: boolean | object } = {}): FastifyInstance
   app.register(aiRoutes, { prefix: '/api/v1' });
 
   // Error handler
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler((error, _request, reply) => {
     const { validation, validationContext } = error as any;
 
     if (validation) {

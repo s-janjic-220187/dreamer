@@ -15,8 +15,8 @@ const server = build({
 async function startServer() {
   try {
     // Start server
-    const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
-    const host = process.env.HOST || '127.0.0.1';
+    const port = process.env['PORT'] ? parseInt(process.env['PORT']) : 3001;
+    const host = process.env['HOST'] || '127.0.0.1';
 
     await server.listen({ port, host });
     console.log(`🚀 Dream Analyzer API server ready at http://${host}:${port}`);

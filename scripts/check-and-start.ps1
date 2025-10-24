@@ -71,10 +71,10 @@ $Services = @{
         CheckUrl    = "http://localhost:3001/health"
     }
     "web" = @{
-        Port        = 5175
+        Port        = 5173
         Name        = "Web App"
         StartScript = "pnpm dev:web"
-        CheckUrl    = "http://localhost:5175"
+        CheckUrl    = "http://localhost:5173"
     }
 }
 

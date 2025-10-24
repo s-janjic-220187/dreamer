@@ -76,7 +76,7 @@ The startup manager monitors these services:
 | Service | Port | Health Check | Start Command |
 |---------|------|--------------|---------------|
 | API Server | 3001 | http://localhost:3001/health | `pnpm dev:api` |
-| Web App | 5175 | http://localhost:5175 | `pnpm dev:web` |
+| Web App | 5173 | http://localhost:5173 | `pnpm dev:web` |
 
 ## VS Code Integration
 

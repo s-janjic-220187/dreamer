@@ -37,10 +37,10 @@ const SERVICES = {
         healthCheck: 'http://localhost:3001/health'
     },
     web: {
-        port: 5175,
+        port: 5173,
         name: 'Web App',
         script: 'pnpm dev:web',
-        healthCheck: 'http://localhost:5175'
+        healthCheck: 'http://localhost:5173'
     }
 };
 

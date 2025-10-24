@@ -47,7 +47,7 @@ scripts\start.bat
 
 ### **Before Starting Any Service:**
 1. ✅ **Check Current Directory** → Ensures we're in `G:\dreamer`
-2. ✅ **Scan Ports** → Checks if API (3001) or Web (5175) are in use
+2. ✅ **Scan Ports** → Checks if API (3001) or Web (5173) are in use
 3. ✅ **Identify Processes** → Finds which processes are using the ports
 4. ✅ **Smart Decision** → Only starts services that aren't already running
 
@@ -60,7 +60,7 @@ Current Directory: G:\dreamer
 📊 Current Services Status:
 ----------------------------------------
 🟢 API Server: RUNNING on port 3001 (PID: 1234)
-🟢 Web App: RUNNING on port 5175 (PID: 5678)
+🟢 Web App: RUNNING on port 5173 (PID: 5678)
 ```
 
 ### **Conflict Resolution:**
@@ -135,10 +135,11 @@ pnpm start:force
 ## 🔧 **Technical Details**
 
 - **Port Detection**: Uses `netstat` (Windows) / `lsof` (Unix) for process identification
-- **Process Management**: Graceful termination with fallback to force kill
+- **Process Management**: Graceful termination with fallback to force kill  
 - **Directory Context**: All scripts use absolute paths and set working directory
 - **Error Handling**: Comprehensive error reporting and recovery
 - **Cross-Platform**: Node.js core with platform-specific optimizations
+- **Default Ports**: API Server (3001), Web App (5173)
 
 ---
 

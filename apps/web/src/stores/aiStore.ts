@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { aiService, type DreamAnalysis, type AIInsight } from '../services/ai';
+import { aiService, type AIInsight, type DreamAnalysis } from '../services/ai';
 import type { Dream } from '../services/api';
 
 interface AIStore {
@@ -19,7 +19,7 @@ interface AIStore {
   setAnalyses: (analyses: Record<string, DreamAnalysis>) => void;
   setInsights: (insights: AIInsight[]) => void;
   setJournalPrompts: (prompts: string[]) => void;
-  
+
   // Async actions
   analyzeDream: (dream: Dream) => Promise<DreamAnalysis | null>;
   getPatternInsights: (dreamIds: string[]) => Promise<void>;
@@ -51,28 +51,28 @@ export const useAIStore = create<AIStore>()(
       analyzeDream: async (dream: Dream) => {
         try {
           set({ isAnalyzing: true, error: null });
-          
+
           const analysis = await aiService.analyzeDream({
             dreamContent: dream.content,
             dreamTitle: dream.title,
             mood: dream.mood,
             tags: dream.tags,
           });
-          
+
           // Update analysis with dream ID
           analysis.dreamId = dream.id;
-          
+
           const { analyses } = get();
-          set({ 
+          set({
             analyses: { ...analyses, [dream.id]: analysis },
-            isAnalyzing: false 
+            isAnalyzing: false
           });
-          
+
           return analysis;
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'Failed to analyze dream';
           set({ error: errorMessage, isAnalyzing: false });
-          
+
           // Try fallback analysis
           try {
             const fallbackAnalysis = await aiService.generateFallbackAnalysis({
@@ -81,11 +81,11 @@ export const useAIStore = create<AIStore>()(
               mood: dream.mood,
               tags: dream.tags,
             });
-            
+
             fallbackAnalysis.dreamId = dream.id;
             const { analyses } = get();
             set({ analyses: { ...analyses, [dream.id]: fallbackAnalysis } });
-            
+
             return fallbackAnalysis;
           } catch {
             return null;
@@ -143,8 +143,6 @@ export const useAIStore = create<AIStore>()(
 export const useAIAnalysis = (dreamId: string) => useAIStore((state) => state.analyses[dreamId]);
 export const useAIInsights = () => useAIStore((state) => state.insights);
 export const useJournalPrompts = () => useAIStore((state) => state.journalPrompts);
-export const useAILoading = () => useAIStore((state) => ({ 
-  isAnalyzing: state.isAnalyzing, 
-  isLoadingInsights: state.isLoadingInsights 
-}));
+export const useIsAnalyzing = () => useAIStore((state) => state.isAnalyzing);
+export const useIsLoadingInsights = () => useAIStore((state) => state.isLoadingInsights);
 export const useAIError = () => useAIStore((state) => state.error);

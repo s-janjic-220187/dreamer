@@ -168,14 +168,15 @@ export function DreamForm({ dreamId }: DreamFormProps) {
             value={formData.date}
             onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
             style={{
-              padding: '12px',
+              padding: '8px 12px',
               borderRadius: '8px',
               border: '1px solid #d1d5db',
               fontSize: '16px',
-              backgroundColor: 'white',
-              color: 'black',
               width: '100%',
               outline: 'none',
+              backgroundColor: 'transparent',
+              colorScheme: 'light',
+              cursor: 'pointer',
             }}
             onFocus={(e) => {
               e.target.style.borderColor = '#3b82f6';

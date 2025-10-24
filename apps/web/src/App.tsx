@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { TamaguiProvider } from '@tamagui/core'
-import { config } from './tamagui.config'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { Layout } from './components'
-import { HomePage, DreamsPage, DreamDetailPage, NewDreamPage, EditDreamPage, AIInsightsPage } from './pages'
+import { AIInsightsPage, DreamDetailPage, DreamsPage, EditDreamPage, HomePage, NewDreamPage } from './pages'
+import { config } from './tamagui.config'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <Route path="/dreams/new" element={<NewDreamPage />} />
             <Route path="/dreams/:id/edit" element={<EditDreamPage />} />
             <Route path="/dreams/:id" element={<DreamDetailPage />} />
-            <Route path="/insights" element={<AIInsightsPage />} />
+            <Route path="/ai-insights" element={<AIInsightsPage />} />
           </Routes>
         </Layout>
       </Router>

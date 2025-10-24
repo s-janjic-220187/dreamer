@@ -19,13 +19,20 @@ export interface OpenAIAnalysisResponse {
         confidence: number;
         category: SymbolCategory;
     }>;
-    emotions: string[];
+    emotions: Array<{
+        emotion: string;
+        intensity: number;
+    }>;
     patterns: string[];
     suggestions: string[];
 }
 
 // Extended DreamAnalysis interface for AI service
-export interface ExtendedDreamAnalysis extends Omit<DreamAnalysis, 'generatedAt' | 'modelUsed'> {
+export interface ExtendedDreamAnalysis extends Omit<DreamAnalysis, 'generatedAt' | 'modelUsed' | 'emotions'> {
+    emotions: Array<{
+        emotion: string;
+        intensity: number;
+    }>;
     patterns: string[];
     suggestions: string[];
     createdAt: Date;
@@ -233,7 +240,7 @@ export class AIService {
     /**
      * Extract emotions from dream content and mood
      */
-    private extractEmotions(dreamText: string, mood?: string): string[] {
+    private extractEmotions(dreamText: string, mood?: string): Array<{ emotion: string; intensity: number }> {
         const emotionKeywords = {
             'joy': ['happy', 'joy', 'excited', 'delighted', 'cheerful'],
             'fear': ['scared', 'afraid', 'terrified', 'anxious', 'worried'],
@@ -244,21 +251,34 @@ export class AIService {
             'peace': ['calm', 'peaceful', 'serene', 'tranquil', 'relaxed']
         };
 
-        const emotions: string[] = [];
+        const emotionIntensities: Array<{ emotion: string; intensity: number }> = [];
 
-        // Extract emotions from text
+        // Extract emotions from text with intensity calculation
         for (const [emotion, keywords] of Object.entries(emotionKeywords)) {
-            if (keywords.some(keyword => dreamText.includes(keyword))) {
-                emotions.push(emotion);
+            let matchCount = 0;
+            let totalIntensity = 0;
+
+            for (const keyword of keywords) {
+                if (dreamText.includes(keyword)) {
+                    matchCount++;
+                    // Base intensity + word strength modifier
+                    totalIntensity += 0.5 + (keywords.indexOf(keyword) === 0 ? 0.3 : 0.2);
+                }
+            }
+
+            if (matchCount > 0) {
+                // Calculate intensity (0.3 to 1.0 range based on matches)
+                const intensity = Math.min(1.0, 0.3 + (totalIntensity / keywords.length));
+                emotionIntensities.push({ emotion, intensity });
             }
         }
 
         // Add emotion based on mood if provided
-        if (mood && !emotions.includes(mood)) {
-            emotions.push(mood);
+        if (mood && !emotionIntensities.some(e => e.emotion === mood)) {
+            emotionIntensities.push({ emotion: mood, intensity: 0.8 });
         }
 
-        return emotions.length > 0 ? emotions : ['neutral'];
+        return emotionIntensities.length > 0 ? emotionIntensities : [{ emotion: 'neutral', intensity: 0.5 }];
     }
 
     /**
@@ -297,8 +317,9 @@ export class AIService {
     /**
      * Generate suggestions based on analysis
      */
-    private generateSuggestions(themes: string[], emotions: string[], symbols: DreamSymbol[]): string[] {
+    private generateSuggestions(themes: string[], emotions: Array<{ emotion: string; intensity: number }>, symbols: DreamSymbol[]): string[] {
         const suggestions: string[] = [];
+        const emotionNames = emotions.map(e => e.emotion);
 
         // Theme-based suggestions
         if (themes.includes('fear')) {
@@ -312,10 +333,10 @@ export class AIService {
         }
 
         // Emotion-based suggestions
-        if (emotions.includes('fear')) {
+        if (emotionNames.includes('fear')) {
             suggestions.push('Practice relaxation techniques before sleep to reduce anxiety dreams');
         }
-        if (emotions.includes('joy')) {
+        if (emotionNames.includes('joy')) {
             suggestions.push('This positive dream energy can be channeled into your daily activities');
         }
 
@@ -337,13 +358,13 @@ export class AIService {
     /**
      * Generate comprehensive interpretation
      */
-    private generateInterpretation(themes: string[], symbols: DreamSymbol[], emotions: string[], patterns: string[]): string {
+    private generateInterpretation(themes: string[], symbols: DreamSymbol[], emotions: Array<{ emotion: string; intensity: number }>, patterns: string[]): string {
         let interpretation = 'This dream appears to represent ';
 
         // Add emotional context
         if (emotions.length > 0) {
-            const dominantEmotion = emotions[0]; // First emotion found
-            interpretation += `${dominantEmotion} feelings and `;
+            const dominantEmotion = emotions.sort((a, b) => b.intensity - a.intensity)[0];
+            interpretation += `${dominantEmotion.emotion} feelings and `;
         }
 
         // Add thematic analysis
@@ -408,7 +429,15 @@ export class AIService {
         // Analyze emotional patterns
         const emotions = dreams.flatMap(dream => {
             if (dream.analysis) {
-                return dream.analysis.emotions; // emotions are already strings
+                // Handle both old format (strings) and new format (objects with intensity)
+                if (dream.analysis.emotions.length > 0) {
+                    const firstEmotion = dream.analysis.emotions[0];
+                    if (typeof firstEmotion === 'string') {
+                        return dream.analysis.emotions as string[];
+                    } else {
+                        return (dream.analysis.emotions as unknown as Array<{ emotion: string; intensity: number }>).map(e => e.emotion);
+                    }
+                }
             }
             return [dream.mood];
         });
@@ -424,7 +453,19 @@ export class AIService {
                 title: `Emotional Pattern: ${emotion}`,
                 description: `${emotion} emotions are prominent in your dreams, reflecting your current emotional state`,
                 confidence: count / dreams.length,
-                relatedDreams: dreams.filter(d => d.mood === emotion || d.analysis?.emotions.includes(emotion)).map(d => d.id)
+                relatedDreams: dreams.filter(d => {
+                    if (d.mood === emotion) return true;
+                    if (d.analysis?.emotions && d.analysis.emotions.length > 0) {
+                        const firstEmotion = d.analysis.emotions[0];
+                        if (typeof firstEmotion === 'string') {
+                            return (d.analysis.emotions as string[]).includes(emotion);
+                        } else {
+                            return (d.analysis.emotions as unknown as Array<{ emotion: string; intensity: number }>)
+                                .some(e => e.emotion === emotion);
+                        }
+                    }
+                    return false;
+                }).map(d => d.id)
             });
         }
 

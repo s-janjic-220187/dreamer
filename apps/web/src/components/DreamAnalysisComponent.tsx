@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { YStack, XStack } from '@tamagui/stacks';
-import { H3, H4, Paragraph } from '@tamagui/text';
 import { Button } from '@tamagui/button';
 import { Separator } from '@tamagui/separator';
-import { useAIStore, useAIAnalysis, useAILoading } from '../stores/aiStore';
+import { XStack, YStack } from '@tamagui/stacks';
+import { H3, H4, Paragraph } from '@tamagui/text';
+import { useEffect, useState } from 'react';
 import type { Dream } from '../services/api';
+import { useAIAnalysis, useAIStore, useIsAnalyzing } from '../stores/aiStore';
 
 interface DreamAnalysisComponentProps {
   dream: Dream;
@@ -13,7 +13,7 @@ interface DreamAnalysisComponentProps {
 export function DreamAnalysisComponent({ dream }: DreamAnalysisComponentProps) {
   const { analyzeDream } = useAIStore();
   const analysis = useAIAnalysis(dream.id);
-  const { isAnalyzing } = useAILoading();
+  const isAnalyzing = useIsAnalyzing();
   const [hasRequestedAnalysis, setHasRequestedAnalysis] = useState(false);
 
   const handleAnalyze = async () => {
@@ -49,9 +49,9 @@ export function DreamAnalysisComponent({ dream }: DreamAnalysisComponentProps) {
         <Paragraph color="$gray11">
           Get AI-powered insights into your dream's meaning, symbols, and themes.
         </Paragraph>
-        <Button 
-          theme="blue" 
-          size="$4" 
+        <Button
+          theme="blue"
+          size="$4"
           onPress={handleAnalyze}
           disabled={isAnalyzing}
         >
@@ -146,9 +146,9 @@ export function DreamAnalysisComponent({ dream }: DreamAnalysisComponentProps) {
               .sort((a, b) => b.intensity - a.intensity)
               .map((emotion, index) => (
                 <XStack key={index} alignItems="center" space="$3">
-                  <Paragraph 
-                    fontSize="$4" 
-                    fontWeight="600" 
+                  <Paragraph
+                    fontSize="$4"
+                    fontWeight="600"
                     color={getMoodColor(emotion.emotion)}
                     textTransform="capitalize"
                   >
@@ -190,9 +190,9 @@ export function DreamAnalysisComponent({ dream }: DreamAnalysisComponentProps) {
 
       {/* Re-analyze Button */}
       <XStack justifyContent="center">
-        <Button 
-          variant="outlined" 
-          size="$3" 
+        <Button
+          variant="outlined"
+          size="$3"
           onPress={handleAnalyze}
           disabled={isAnalyzing}
         >

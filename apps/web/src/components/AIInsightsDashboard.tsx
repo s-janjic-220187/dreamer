@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
-import { YStack, XStack } from '@tamagui/stacks';
-import { H2, H3, H4, Paragraph } from '@tamagui/text';
 import { Button } from '@tamagui/button';
 import { Separator } from '@tamagui/separator';
-import { useAIStore, useAIInsights, useJournalPrompts, useAILoading } from '../stores/aiStore';
+import { XStack, YStack } from '@tamagui/stacks';
+import { H2, H3, H4, Paragraph } from '@tamagui/text';
+import { useEffect } from 'react';
+import { useAIInsights, useAIStore, useIsLoadingInsights, useJournalPrompts } from '../stores/aiStore';
 import { useDreams } from '../stores/dreamStore';
 
 export function AIInsightsDashboard() {
   const { loadPersonalizedInsights, generateJournalPrompts } = useAIStore();
   const insights = useAIInsights();
   const journalPrompts = useJournalPrompts();
-  const { isLoadingInsights } = useAILoading();
+  const isLoadingInsights = useIsLoadingInsights();
   const dreams = useDreams();
 
   useEffect(() => {
     // Load insights when component mounts
     loadPersonalizedInsights();
-    if (journalPrompts.length === 0) {
+    if (!journalPrompts || journalPrompts.length === 0) {
       generateJournalPrompts();
     }
   }, []);
@@ -54,12 +54,12 @@ export function AIInsightsDashboard() {
     <YStack space="$4" padding="$4" flex={1}>
       <H2>AI Insights</H2>
 
-      {dreams.length === 0 ? (
-        <YStack 
-          space="$4" 
-          padding="$6" 
-          alignItems="center" 
-          backgroundColor="$gray2" 
+      {!dreams || dreams.length === 0 ? (
+        <YStack
+          space="$4"
+          padding="$6"
+          alignItems="center"
+          backgroundColor="$gray2"
           borderRadius="$4"
         >
           <Paragraph fontSize="$6">🌙</Paragraph>
@@ -78,7 +78,7 @@ export function AIInsightsDashboard() {
             <XStack justifyContent="space-between" flexWrap="wrap" gap="$4">
               <YStack alignItems="center" space="$1">
                 <Paragraph fontSize="$6" fontWeight="600" color="$blue11">
-                  {dreams.length}
+                  {dreams ? dreams.length : 0}
                 </Paragraph>
                 <Paragraph fontSize="$2" color="$blue10">
                   Total Dreams
@@ -86,7 +86,7 @@ export function AIInsightsDashboard() {
               </YStack>
               <YStack alignItems="center" space="$1">
                 <Paragraph fontSize="$6" fontWeight="600" color="$blue11">
-                  {insights.filter(i => i.type === 'pattern').length}
+                  {insights ? insights.filter(i => i.type === 'pattern').length : 0}
                 </Paragraph>
                 <Paragraph fontSize="$2" color="$blue10">
                   Patterns Found
@@ -94,7 +94,7 @@ export function AIInsightsDashboard() {
               </YStack>
               <YStack alignItems="center" space="$1">
                 <Paragraph fontSize="$6" fontWeight="600" color="$blue11">
-                  {new Set(dreams.flatMap(d => d.tags)).size}
+                  {dreams ? new Set(dreams.flatMap(d => d.tags)).size : 0}
                 </Paragraph>
                 <Paragraph fontSize="$2" color="$blue10">
                   Unique Themes
@@ -104,27 +104,27 @@ export function AIInsightsDashboard() {
           </YStack>
 
           {/* AI Insights */}
-          {insights.length > 0 ? (
+          {insights && insights.length > 0 ? (
             <YStack space="$3">
               <XStack justifyContent="space-between" alignItems="center">
                 <H3>✨ Personalized Insights</H3>
-                <Button 
-                  size="$2" 
-                  variant="outlined" 
+                <Button
+                  size="$2"
+                  variant="outlined"
                   onPress={loadPersonalizedInsights}
                   disabled={isLoadingInsights}
                 >
                   Refresh
                 </Button>
               </XStack>
-              
+
               <YStack space="$3">
                 {insights.map((insight, index) => (
-                  <YStack 
+                  <YStack
                     key={index}
-                    space="$3" 
-                    padding="$4" 
-                    backgroundColor="$gray2" 
+                    space="$3"
+                    padding="$4"
+                    backgroundColor="$gray2"
                     borderRadius="$4"
                     borderWidth={1}
                     borderColor="$gray6"
@@ -140,11 +140,11 @@ export function AIInsightsDashboard() {
                         </Paragraph>
                       </YStack>
                     </XStack>
-                    
+
                     <Paragraph color="$gray12">
                       {insight.description}
                     </Paragraph>
-                    
+
                     {insight.relatedDreams && insight.relatedDreams.length > 0 && (
                       <XStack alignItems="center" space="$2">
                         <Paragraph fontSize="$2" color="$gray10">
@@ -162,9 +162,9 @@ export function AIInsightsDashboard() {
               <Paragraph color="$gray11">
                 Keep recording dreams to discover patterns and get personalized insights!
               </Paragraph>
-              <Button 
-                theme="blue" 
-                size="$3" 
+              <Button
+                theme="blue"
+                size="$3"
                 onPress={loadPersonalizedInsights}
                 disabled={isLoadingInsights}
               >
@@ -174,25 +174,25 @@ export function AIInsightsDashboard() {
           )}
 
           {/* Journal Prompts */}
-          {journalPrompts.length > 0 && (
+          {journalPrompts && journalPrompts.length > 0 && (
             <YStack space="$3">
               <XStack justifyContent="space-between" alignItems="center">
                 <H3>📝 Dream Journal Prompts</H3>
-                <Button 
-                  size="$2" 
-                  variant="outlined" 
+                <Button
+                  size="$2"
+                  variant="outlined"
                   onPress={() => generateJournalPrompts()}
                 >
                   New Prompts
                 </Button>
               </XStack>
-              
+
               <YStack space="$2">
                 {journalPrompts.map((prompt, index) => (
-                  <YStack 
+                  <YStack
                     key={index}
-                    padding="$3" 
-                    backgroundColor="$green2" 
+                    padding="$3"
+                    backgroundColor="$green2"
                     borderRadius="$3"
                     borderWidth={1}
                     borderColor="$green6"
@@ -215,19 +215,19 @@ export function AIInsightsDashboard() {
 
       {/* Action Buttons */}
       <Separator />
-      
+
       <XStack space="$3" justifyContent="center" flexWrap="wrap">
-        <Button 
-          theme="blue" 
+        <Button
+          theme="blue"
           size="$3"
           onPress={loadPersonalizedInsights}
           disabled={isLoadingInsights}
         >
           {isLoadingInsights ? 'Loading...' : 'Refresh Insights'}
         </Button>
-        
-        <Button 
-          variant="outlined" 
+
+        <Button
+          variant="outlined"
           size="$3"
           onPress={() => generateJournalPrompts(5)}
         >

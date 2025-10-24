@@ -1,0 +1,271 @@
+{
+    "folders": [
+        {
+            "name": "🌙 Dream Analyzer (Root)",
+            "path": "."
+        },
+        {
+            "name": "📱 Mobile App",
+            "path": "./apps/mobile"
+        },
+        {
+            "name": "🌐 Web App",
+            "path": "./apps/web"
+        },
+        {
+            "name": "🔧 API Server",
+            "path": "./apps/api"
+        },
+        {
+            "name": "📚 Shared Libraries",
+            "path": "./libs"
+        },
+        {
+            "name": "📋 Scripts",
+            "path": "./scripts"
+        }
+    ],
+    "settings": {
+        "typescript.preferences.includePackageJsonAutoImports": "on",
+        "typescript.suggest.autoImports": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.formatOnSave": true,
+        "files.exclude": {
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/build": true,
+            "**/.next": true,
+            "**/coverage": true,
+            "**/.turbo": true
+        },
+        "search.exclude": {
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/build": true,
+            "**/.next": true,
+            "**/coverage": true,
+            "**/.turbo": true
+        },
+        "terminal.integrated.cwd": "${workspaceFolder}",
+        "terminal.integrated.defaultProfile.windows": "PowerShell",
+        "terminal.integrated.profiles.windows": {
+            "PowerShell": {
+                "source": "PowerShell",
+                "args": [
+                    "-NoExit",
+                    "-Command",
+                    "cd '${workspaceFolder}'"
+                ]
+            },
+            "Command Prompt": {
+                "path": [
+                    "${env:windir}\\Sysnative\\cmd.exe",
+                    "${env:windir}\\System32\\cmd.exe"
+                ],
+                "args": [
+                    "/k",
+                    "cd /d \"${workspaceFolder}\""
+                ]
+            },
+            "Git Bash": {
+                "source": "Git Bash",
+                "args": [
+                    "--cd=${workspaceFolder}"
+                ]
+            }
+        },
+        "debug.javascript.defaultRuntimeExecutable": {
+            "pwa-node": "node"
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "🌙 Start Dream Analyzer",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "start"
+                ],
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared",
+                    "showReuseMessage": true,
+                    "clear": false
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "🔄 Restart Services",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "restart"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "📊 Check Services Status",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "start:status"
+                ],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "🚀 Force Start (Kill & Restart)",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "start:force"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "🌐 Start Web Only",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "dev:web"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "dedicated"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}/apps/web"
+                }
+            },
+            {
+                "label": "🔧 Start API Only",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "dev:api"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "dedicated"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}/apps/api"
+                }
+            },
+            {
+                "label": "📱 Start Mobile Only",
+                "type": "shell",
+                "command": "pnpm",
+                "args": [
+                    "dev:mobile"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "dedicated"
+                },
+                "problemMatcher": [],
+                "options": {
+                    "cwd": "${workspaceFolder}/apps/mobile"
+                }
+            }
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "🔧 Debug API Server",
+                "type": "node",
+                "request": "launch",
+                "program": "${workspaceFolder}/apps/api/src/index.ts",
+                "cwd": "${workspaceFolder}/apps/api",
+                "runtimeArgs": [
+                    "-r",
+                    "ts-node/register"
+                ],
+                "env": {
+                    "NODE_ENV": "development"
+                },
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen"
+            },
+            {
+                "name": "🌙 Debug Startup Manager",
+                "type": "node",
+                "request": "launch",
+                "program": "${workspaceFolder}/scripts/startup-manager.js",
+                "cwd": "${workspaceFolder}",
+                "console": "integratedTerminal",
+                "args": [
+                    "--status"
+                ]
+            }
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "esbenp.prettier-vscode",
+            "dbaeumer.vscode-eslint",
+            "bradlc.vscode-tailwindcss",
+            "ms-vscode.vscode-typescript-next",
+            "ms-vscode.powershell",
+            "ms-playwright.playwright",
+            "prisma.prisma",
+            "tamasfe.even-better-toml"
+        ]
+    }
+}
